@@ -1,0 +1,47 @@
+# cpmf-uipsl-* libraries — org inventory
+# open  = src/open  (UiPath Studio project, .xaml)
+# plus  = src/plus  (coded activities, C#)
+# demo  = src/demo  (consumer/regression project)
+# skills = skills/  (Claude/agent skills folder)
+libraries:
+  - name: cpmf-uipsl-sap
+    open: true
+    plus: false
+    demo: false
+    skills: false
+
+  - name: cpmf-uipsl-logging
+    open: true
+    plus: false
+    demo: false
+    skills: false
+
+  - name: cpmf-uipsl-sftp
+    open: false
+    plus: true
+    demo: true
+    skills: false
+
+  - name: cpmf-uipsl-m365
+    open: true
+    plus: true
+    demo: true
+    skills: false
+
+  - name: cpmf-uipsl-rpachallenge
+    open: true
+    plus: false
+    demo: false
+    skills: false
+
+  - name: cpmf-uipsl-config
+    open: false
+    plus: true
+    demo: true
+    skills: false
+
+  - name: cpmf-uipsl-tpl
+    open: false
+    plus: true
+    demo: true
+    skills: true

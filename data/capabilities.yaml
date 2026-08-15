@@ -1,0 +1,66 @@
+# Capabilities catalog spec
+#
+# Goal: auto-generate a PM-style capabilities list (activity name, description,
+# in/out arguments) per library, from a parseable source each library commits to.
+#
+# This file defines the convention + per-library compliance status.
+# Not yet generated — no generator script exists yet.
+
+convention:
+  plus:
+    description: >
+      C# coded activities (src/plus/**/Activities/*.cs). Source of truth is
+      XML doc comments on the class + public InArgument<T>/OutArgument<T>
+      properties.
+    required:
+      - "/// <summary>...</summary> on the activity class"
+      - "/// <summary>...</summary> on each InArgument<T>/OutArgument<T> property"
+      - "[Category(\"CPMForge.<Lib>\")] attribute on the class"
+    parser: not implemented
+
+  open:
+    description: >
+      UiPath Studio workflows (src/open/**/*.xaml) exposed as library
+      activities. Source of truth is a companion doc.json (see
+      cpmf-uipsl-sap/docs/CPMForge.SAP.doc.json for the existing example)
+      plus one docs/*.md per activity.
+    required:
+      - "docs/<Lib>.doc.json — array of {activity, description, arguments[]}"
+      - "docs/<activity>.md — human-readable detail, one per activity"
+    parser: not implemented
+
+libraries:
+  - name: cpmf-uipsl-sap
+    edition: open
+    source_present: true      # docs/CPMForge.SAP.doc.json + docs/*.md exist
+    parser_wired: false
+
+  - name: cpmf-uipsl-logging
+    edition: open
+    source_present: false
+    parser_wired: false
+
+  - name: cpmf-uipsl-sftp
+    edition: plus
+    source_present: unknown   # not yet audited for XML doc comment coverage
+    parser_wired: false
+
+  - name: cpmf-uipsl-m365
+    edition: open+plus
+    source_present: unknown
+    parser_wired: false
+
+  - name: cpmf-uipsl-rpachallenge
+    edition: open
+    source_present: false
+    parser_wired: false
+
+  - name: cpmf-uipsl-config
+    edition: plus
+    source_present: unknown
+    parser_wired: false
+
+  - name: cpmf-uipsl-tpl
+    edition: plus
+    source_present: unknown
+    parser_wired: false

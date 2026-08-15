@@ -1,8 +1,9 @@
 """Scan cpmf-uipsl-* repos for capability doc sources.
 
-Reads the repo list from data/libraries.yaml, checks each local clone for
-the doc source required by data/capabilities.yaml's convention (doc.json
-for open, XML doc comments for plus), and prints a report.
+Reads the repo list from data/libraries.yaml, checks for the doc source
+required by data/capabilities.yaml's convention — generated doc.json under
+data/doc/<repo>/ for open (see tools/libdoc-run), XML doc comments in the
+local clone's src/plus for plus — and prints a report.
 
 Usage:
     uv run scan.py [--root D:/github.com/cprima-forge]
@@ -23,13 +24,9 @@ def load_libraries():
         return yaml.safe_load(f)["libraries"]
 
 
-def check_open(repo_path: Path) -> bool:
-    # henri libdoc default output: src/open/docs/*.doc.json
-    docs = repo_path / "src" / "open" / "docs"
-    if docs.is_dir() and any(docs.glob("*.doc.json")):
-        return True
-    # legacy manual location
-    docs = repo_path / "docs"
+def check_open(name: str) -> bool:
+    # tools/libdoc-run writes here: data/doc/<repo>/*.doc.json
+    docs = DATA_DIR / "doc" / name
     return docs.is_dir() and any(docs.glob("*.doc.json"))
 
 
@@ -64,7 +61,7 @@ def main():
 
         results = []
         if lib.get("open"):
-            results.append(("open", check_open(repo_path)))
+            results.append(("open", check_open(name)))
         if lib.get("plus"):
             results.append(("plus", check_plus(repo_path)))
 

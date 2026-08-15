@@ -1,0 +1,20 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-08-15T18:53:24.5430751+00:00",
+  "project": {
+    "name": "cpmf-uipsl-rpachallenge",
+    "version": "0.0.1",
+    "description": "",
+    "expression_language": "VisualBasic",
+    "target_framework": "Windows"
+  },
+  "provenance": {
+    "generator": "henri libdoc",
+    "generator_version": "0.4.1.0",
+    "project_dir": "D:\\github.com\\cprima-forge\\cpmf-uipsl-rpachallenge\\src\\open",
+    "project_json_path": "D:\\github.com\\cprima-forge\\cpmf-uipsl-rpachallenge\\src\\open\\project.json",
+    "source_file_count": 0,
+    "documented_activity_count": 0
+  },
+  "activities": []
+}

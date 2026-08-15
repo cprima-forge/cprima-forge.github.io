@@ -1,0 +1,1766 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-08-15T18:53:23.395778+00:00",
+  "project": {
+    "name": "CPMForge.M365.Open",
+    "version": "0.0.58",
+    "description": "Coded activity library for Microsoft 365 automation. ImmutableID-first Graph mail and OneDrive/SharePoint operations.",
+    "expression_language": "VisualBasic",
+    "target_framework": "Windows"
+  },
+  "provenance": {
+    "generator": "henri libdoc",
+    "generator_version": "0.4.1.0",
+    "project_dir": "D:\\github.com\\cprima-forge\\cpmf-uipsl-m365\\src\\open",
+    "project_json_path": "D:\\github.com\\cprima-forge\\cpmf-uipsl-m365\\src\\open\\project.json",
+    "source_file_count": 60,
+    "documented_activity_count": 31
+  },
+  "activities": [
+    {
+      "name": "BuildIntakeEligibilityConfig",
+      "full_name": "CPMForge.M365.Open.BuildIntakeEligibilityConfig",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Assembles an IntakeEligibilityConfig from individual rule values. Pass the output to CheckMailMessageEligibility as EligibilityRules. Leave any rule at its default (0 / empty) to disable it.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060SenderDomainWhitelist\u0060: \u0060List\u003Cstring\u003E\u0060 - Only allow messages from these domains (e.g. \u0027contoso.com\u0027). Empty = rule inactive.\r\n- \u0060SenderEmailBlacklist\u0060: \u0060List\u003Cstring\u003E\u0060 - Reject messages from these exact addresses. Use \u0022self\u0022 as an alias for the configured mailbox account (self-loop detection). Empty = rule inactive.\r\n- \u0060SenderEmailWhitelist\u0060: \u0060List\u003Cstring\u003E\u0060 - Only allow messages from these exact addresses. Empty = rule inactive.\r\n- \u0060SubjectMustContain\u0060: \u0060List\u003Cstring\u003E\u0060 - All listed terms must appear in the subject (case-insensitive). Empty = rule inactive.\r\n- \u0060SubjectMustNotMatch\u0060: \u0060string\u0060 - Regex pattern \u2014 reject if subject matches. Empty = rule inactive.\r\n- \u0060SubjectMaxLength\u0060: \u0060int\u0060 - Reject if subject exceeds this character count. 0 = rule inactive.\r\n- \u0060RequireAttachment\u0060: \u0060bool?\u0060 - True = message must have at least one attachment. False = must have none. Null/unset = rule inactive.\r\n- \u0060AllowedExtensions\u0060: \u0060List\u003Cstring\u003E\u0060 - Permitted attachment extensions without the dot (e.g. \u0027pdf\u0027, \u0027xlsx\u0027). Empty = rule inactive.\r\n- \u0060MaxAttachmentSizeMb\u0060: \u0060int\u0060 - Reject any single attachment exceeding this size in megabytes. 0 = rule inactive.\r\n- \u0060MaxTotalAttachmentCount\u0060: \u0060int\u0060 - Reject if total number of attachments exceeds this count. 0 = rule inactive.\r\n- \u0060MaxAgeHours\u0060: \u0060int\u0060 - Reject messages older than this many hours. 0 = rule inactive.\r\n- \u0060BodyMustContain\u0060: \u0060List\u003Cstring\u003E\u0060 - All listed terms must appear in the body (case-insensitive). Empty = rule inactive.\r\n- \u0060BodyMustNotContain\u0060: \u0060List\u003Cstring\u003E\u0060 - Reject if any listed term appears in the body. Empty = rule inactive."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Payload\u0060: \u0060IntakeEligibilityConfig\u0060 - Assembled IntakeEligibilityConfig. Pass directly to CheckMailMessageEligibility as EligibilityRules."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "SenderDomainWhitelist",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "Only allow messages from these domains (e.g. \u0027contoso.com\u0027). Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SenderEmailBlacklist",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "Reject messages from these exact addresses. Use \u0022self\u0022 as an alias for the configured mailbox account (self-loop detection). Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SenderEmailWhitelist",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "Only allow messages from these exact addresses. Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SubjectMustContain",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "All listed terms must appear in the subject (case-insensitive). Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SubjectMustNotMatch",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Regex pattern \u2014 reject if subject matches. Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SubjectMaxLength",
+          "direction": "in",
+          "type_name": "int",
+          "summary": "Reject if subject exceeds this character count. 0 = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "RequireAttachment",
+          "direction": "in",
+          "type_name": "bool?",
+          "summary": "True = message must have at least one attachment. False = must have none. Null/unset = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "AllowedExtensions",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "Permitted attachment extensions without the dot (e.g. \u0027pdf\u0027, \u0027xlsx\u0027). Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "MaxAttachmentSizeMb",
+          "direction": "in",
+          "type_name": "int",
+          "summary": "Reject any single attachment exceeding this size in megabytes. 0 = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "MaxTotalAttachmentCount",
+          "direction": "in",
+          "type_name": "int",
+          "summary": "Reject if total number of attachments exceeds this count. 0 = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "MaxAgeHours",
+          "direction": "in",
+          "type_name": "int",
+          "summary": "Reject messages older than this many hours. 0 = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "BodyMustContain",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "All listed terms must appear in the body (case-insensitive). Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "BodyMustNotContain",
+          "direction": "in",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "Reject if any listed term appears in the body. Empty = rule inactive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Payload",
+          "direction": "out",
+          "type_name": "IntakeEligibilityConfig",
+          "summary": "Assembled IntakeEligibilityConfig. Pass directly to CheckMailMessageEligibility as EligibilityRules.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "CheckMailMessageEligibility",
+      "full_name": "CPMForge.M365.Open.CheckMailMessageEligibility",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Evaluates system \u002B business eligibility rules on a MailMessage. Mutates msg.SkipReason/IsTriaged and returns an EligibilityResult. No Graph calls.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 - Optional. Used only to resolve the \u0027self\u0027 alias in SenderEmailBlacklist against Mail.MailboxAccount.\r\n- \u0060EligibilityRules\u0060: \u0060IntakeEligibilityConfig\u0060 - Rule set built by BuildIntakeEligibilityConfig. Business rules are inactive when null.\r\n- \u0060Message\u0060: \u0060MailMessage\u0060 (required) - MailMessage to evaluate. SkipReason and IsTriaged are set on the object in place."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Payload\u0060: \u0060EligibilityResult\u0060 - Typed eligibility result: IsEligible, SkipReason, SenderDomain, SubjectSignal, AttachmentProfile, RulesFired.\r\n- \u0060IsEligible\u0060: \u0060bool\u0060\r\n- \u0060RejectionReasons\u0060: \u0060List\u003Cstring\u003E\u0060 - All rule codes that failed (empty when eligible)."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Message\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": "Optional. Used only to resolve the \u0027self\u0027 alias in SenderEmailBlacklist against Mail.MailboxAccount.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "EligibilityRules",
+          "direction": "in",
+          "type_name": "IntakeEligibilityConfig",
+          "summary": "Rule set built by BuildIntakeEligibilityConfig. Business rules are inactive when null.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Message",
+          "direction": "in",
+          "type_name": "MailMessage",
+          "summary": "MailMessage to evaluate. SkipReason and IsTriaged are set on the object in place.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Payload",
+          "direction": "out",
+          "type_name": "EligibilityResult",
+          "summary": "Typed eligibility result: IsEligible, SkipReason, SenderDomain, SubjectSignal, AttachmentProfile, RulesFired.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "IsEligible",
+          "direction": "out",
+          "type_name": "bool",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "RejectionReasons",
+          "direction": "out",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "All rule codes that failed (empty when eligible).",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "CleanWorkFolder",
+      "full_name": "CPMForge.M365.Open.CleanWorkFolder",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Deletes all contents of the local work folder (%LOCALAPPDATA%\\\u003CWorkFolder\u003E). Swallows IO/permission errors.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)"
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Result\u0060: \u0060Dictionary\u003Cstring, object\u003E\u0060 - workFolder (string), existedBefore (bool), pristineAfter (bool)."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "Dictionary\u003Cstring, object\u003E",
+          "summary": "workFolder (string), existedBefore (bool), pristineAfter (bool).",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "ConfigDump",
+      "full_name": "CPMForge.M365.Open.ConfigDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Writes all M365Config values to the robot log at Trace level.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required) - M365Config object from LoadConfig activity."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": "M365Config object from LoadConfig activity.",
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "DeleteMessage",
+      "full_name": "CPMForge.M365.Open.DeleteMessage",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Soft-deletes a message by moving it to Deleted Items. Not a permanent/hard delete.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required) - ImmutableID of the message to delete (moves to Deleted Items)."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "ImmutableID of the message to delete (moves to Deleted Items).",
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "FlagMessage",
+      "full_name": "CPMForge.M365.Open.FlagMessage",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Sets the flag status on a message (notFlagged, flagged, complete).",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)\r\n- \u0060FlagStatus\u0060: \u0060string\u0060 (required) - notFlagged | flagged | complete"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060\r\n- \u0060FlagStatus\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "FlagStatus",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "notFlagged | flagged | complete",
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "GetAttachments",
+      "full_name": "CPMForge.M365.Open.GetAttachments",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Lists attachments metadata for a message (no content bytes).",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)"
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Attachments\u0060: \u0060List\u003CMailAttachment\u003E\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Attachments",
+          "direction": "out",
+          "type_name": "List\u003CMailAttachment\u003E",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "GetFolder",
+      "full_name": "CPMForge.M365.Open.GetFolder",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "GetFolder",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060FolderName\u0060: \u0060string\u0060 (required) - Folder name or nested path, e.g. \u0027Inbox\u0027 or \u0027Drafts/RPA_Inbox\u0027."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060FolderId\u0060: \u0060string\u0060 default \u0060null\u0060\r\n- \u0060DisplayNameOut\u0060: \u0060string\u0060 default \u0060null\u0060\r\n- \u0060TotalItemCount\u0060: \u0060int\u0060\r\n- \u0060UnreadItemCount\u0060: \u0060int\u0060"
+        },
+        {
+          "id": "defaults",
+          "title": "Defaults",
+          "body": "- \u0060FolderId\u0060 = \u0060null\u0060\r\n- \u0060DisplayNameOut\u0060 = \u0060null\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060FolderName\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "FolderName",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Folder name or nested path, e.g. \u0027Inbox\u0027 or \u0027Drafts/RPA_Inbox\u0027.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "FolderId",
+          "direction": "out",
+          "type_name": "string",
+          "summary": null,
+          "default_value": "null",
+          "is_required": false
+        },
+        {
+          "name": "DisplayNameOut",
+          "direction": "out",
+          "type_name": "string",
+          "summary": null,
+          "default_value": "null",
+          "is_required": false
+        },
+        {
+          "name": "TotalItemCount",
+          "direction": "out",
+          "type_name": "int",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "UnreadItemCount",
+          "direction": "out",
+          "type_name": "int",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "GetMessage",
+      "full_name": "CPMForge.M365.Open.GetMessage",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Fetches a single message by id via Microsoft Graph.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required) - ImmutableID of the message to fetch."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Message\u0060: \u0060MailMessage\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "ImmutableID of the message to fetch.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Message",
+          "direction": "out",
+          "type_name": "MailMessage",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "GetMessages",
+      "full_name": "CPMForge.M365.Open.GetMessages",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Lists messages from a mail folder via Microsoft Graph. Optionally applies eligibility rules with fill-to-target pagination, and expands extensions \u002B attachment metadata. Returns up to Config.Mail.GetCount items.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060EligibilityRules\u0060: \u0060IntakeEligibilityConfig\u0060 - Optional. When set, drives Level-1 Graph $filter \u002B Level-2 client-side attachment filtering and fill-to-target pagination. Null = single page, no filtering."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Messages\u0060: \u0060List\u003CMailMessage\u003E\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "EligibilityRules",
+          "direction": "in",
+          "type_name": "IntakeEligibilityConfig",
+          "summary": "Optional. When set, drives Level-1 Graph $filter \u002B Level-2 client-side attachment filtering and fill-to-target pagination. Null = single page, no filtering.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Messages",
+          "direction": "out",
+          "type_name": "List\u003CMailMessage\u003E",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "GraphConnectionDump",
+      "full_name": "CPMForge.M365.Open.GraphConnectionDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Authenticates with Microsoft Graph and logs mailbox folder metadata.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "GraphIdentityDump",
+      "full_name": "CPMForge.M365.Open.GraphIdentityDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "GraphIdentityDump",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "GraphRequestDiagnostics",
+      "full_name": "CPMForge.M365.Open.GraphRequestDiagnostics",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "GraphRequestDiagnostics",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060FolderName\u0060: \u0060string\u0060 default \u0060null\u0060 - Folder to test against. Defaults to the first configured source folder."
+        },
+        {
+          "id": "defaults",
+          "title": "Defaults",
+          "body": "- \u0060FolderName\u0060 = \u0060null\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "FolderName",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Folder to test against. Defaults to the first configured source folder.",
+          "default_value": "null",
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "HelloWorld",
+      "full_name": "CPMForge.M365.Open.HelloWorld",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Writes Hello World to the robot log.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Message\u0060: \u0060string\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Message",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "JwtClaimsDump",
+      "full_name": "CPMForge.M365.Open.JwtClaimsDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Gets an access token from AccessProvider, decodes the JWT payload, and logs all claims.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060ResourceUrl\u0060: \u0060string\u0060 - Token audience/resource. Default: https://cloud.uipath.com"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "ResourceUrl",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Token audience/resource. Default: https://cloud.uipath.com",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "ListFolders",
+      "full_name": "CPMForge.M365.Open.ListFolders",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Enumerates all mail folders (flat, via mailFolders/delta) and logs them page by page.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)"
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060FolderCount\u0060: \u0060int\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "FolderCount",
+          "direction": "out",
+          "type_name": "int",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "LoadConfig",
+      "full_name": "CPMForge.M365.Open.LoadConfig",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Loads a TOML config file and returns an M365Config object. Default path: Config\\config.open.toml relative to project directory.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060ConfigFilePath\u0060: \u0060string\u0060 - Path to the TOML config file. Relative paths resolve from the project directory."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "ConfigFilePath",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Path to the TOML config file. Relative paths resolve from the project directory.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Config",
+          "direction": "out",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "MarkAsRead",
+      "full_name": "CPMForge.M365.Open.MarkAsRead",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Sets isRead=true (or false) on a message via Microsoft Graph.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)\r\n- \u0060IsRead\u0060: \u0060bool\u0060 - True to mark as read (default), False to mark as unread."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "IsRead",
+          "direction": "in",
+          "type_name": "bool",
+          "summary": "True to mark as read (default), False to mark as unread.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "MoveMessage",
+      "full_name": "CPMForge.M365.Open.MoveMessage",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Moves a message to a destination folder. Returns the new ImmutableID of the moved message.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required) - ImmutableID of the message to move.\r\n- \u0060DestinationFolderId\u0060: \u0060string\u0060 default \u0060null\u0060 - Well-known name (inbox, sentItems, deleteditems, drafts) or raw folder id. Ignored when Destination Folder Path is set.\r\n- \u0060DestinationFolderPath\u0060: \u0060string\u0060 default \u0060null\u0060"
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060NewMessageId\u0060: \u0060string\u0060 - ImmutableID of the message in its new location."
+        },
+        {
+          "id": "defaults",
+          "title": "Defaults",
+          "body": "- \u0060DestinationFolderId\u0060 = \u0060null\u0060\r\n- \u0060DestinationFolderPath\u0060 = \u0060null\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "ImmutableID of the message to move.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "DestinationFolderId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Well-known name (inbox, sentItems, deleteditems, drafts) or raw folder id. Ignored when Destination Folder Path is set.",
+          "default_value": "null",
+          "is_required": false
+        },
+        {
+          "name": "DestinationFolderPath",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": "null",
+          "is_required": false
+        },
+        {
+          "name": "NewMessageId",
+          "direction": "out",
+          "type_name": "string",
+          "summary": "ImmutableID of the message in its new location.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "OrchestratorLicenseDump",
+      "full_name": "CPMForge.M365.Open.OrchestratorLicenseDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Calls Orchestrator /odata/Settings/.../GetLicense with the robot token and logs IsCommunity, SubscriptionPlan, etc.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [],
+      "arguments": []
+    },
+    {
+      "name": "ReadExtension",
+      "full_name": "CPMForge.M365.Open.ReadExtension",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Reads the CPMForge open extension from a message. Returns null if not present.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)"
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060ProcessingState\u0060: \u0060string\u0060 - Null if extension not present.\r\n- \u0060CaseId\u0060: \u0060string\u0060\r\n- \u0060ExtensionExists\u0060: \u0060bool\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "ProcessingState",
+          "direction": "out",
+          "type_name": "string",
+          "summary": "Null if extension not present.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "CaseId",
+          "direction": "out",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "ExtensionExists",
+          "direction": "out",
+          "type_name": "bool",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "RenderMailTemplate",
+      "full_name": "CPMForge.M365.Open.RenderMailTemplate",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "RenderMailTemplate",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060TemplatePath\u0060: \u0060string\u0060 (required) - Path to .sbn template file. Relative paths resolve from project directory; absolute paths used as-is.\r\n- \u0060Variables\u0060: \u0060Dictionary\u003Cstring, object\u003E\u0060 - Key-value pairs exposed as top-level Scriban variables."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Status\u0060: \u0060ActivityStatus\u0060\r\n- \u0060Subject\u0060: \u0060string\u0060 - Rendered subject line (content after \u0027Subject: \u0027 on line 1).\r\n- \u0060Body\u0060: \u0060string\u0060 - Rendered body (everything after the first blank line)."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060TemplatePath\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "TemplatePath",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Path to .sbn template file. Relative paths resolve from project directory; absolute paths used as-is.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Variables",
+          "direction": "in",
+          "type_name": "Dictionary\u003Cstring, object\u003E",
+          "summary": "Key-value pairs exposed as top-level Scriban variables.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "ActivityStatus",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Subject",
+          "direction": "out",
+          "type_name": "string",
+          "summary": "Rendered subject line (content after \u0027Subject: \u0027 on line 1).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Body",
+          "direction": "out",
+          "type_name": "string",
+          "summary": "Rendered body (everything after the first blank line).",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "RuntimeDump",
+      "full_name": "CPMForge.M365.Open.RuntimeDump",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Dumps IExecutorRuntime properties to the robot log. Useful for licence checks and environment introspection.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [],
+      "arguments": []
+    },
+    {
+      "name": "SaveAsEml",
+      "full_name": "CPMForge.M365.Open.SaveAsEml",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Downloads a message as raw RFC 2822 bytes and writes to a .eml file.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required) - Graph message id (ImmutableID). Uri-encoded automatically.\r\n- \u0060OutputPath\u0060: \u0060string\u0060 (required) - Full path to the .eml file to write."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060BytesWritten\u0060: \u0060long\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060\r\n- \u0060OutputPath\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Graph message id (ImmutableID). Uri-encoded automatically.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "OutputPath",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Full path to the .eml file to write.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "BytesWritten",
+          "direction": "out",
+          "type_name": "long",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "SaveAttachments",
+      "full_name": "CPMForge.M365.Open.SaveAttachments",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Downloads all attachments for a message and writes them to an output directory.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)\r\n- \u0060OutputDirectory\u0060: \u0060string\u0060 (required) - Directory to write attachment files to.\r\n- \u0060SkipInline\u0060: \u0060bool\u0060 - When true, inline (cid) attachments are not saved. Default: false."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060SavedFiles\u0060: \u0060List\u003Cstring\u003E\u0060 - List of full paths of saved files."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060\r\n- \u0060OutputDirectory\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "OutputDirectory",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "Directory to write attachment files to.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "SkipInline",
+          "direction": "in",
+          "type_name": "bool",
+          "summary": "When true, inline (cid) attachments are not saved. Default: false.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "SavedFiles",
+          "direction": "out",
+          "type_name": "List\u003Cstring\u003E",
+          "summary": "List of full paths of saved files.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "SendForward",
+      "full_name": "CPMForge.M365.Open.SendForward",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Forwards a message. Two-step: createForward draft (returns ImmutableId) then send. ToRecipients required.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060Draft\u0060: \u0060MailDraft\u0060 (required) - MailDraft with SourceImmutableId and ToRecipients set."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Status\u0060: \u0060ActivityStatus\u0060\r\n- \u0060Result\u0060: \u0060SendResult\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060Draft\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Draft",
+          "direction": "in",
+          "type_name": "MailDraft",
+          "summary": "MailDraft with SourceImmutableId and ToRecipients set.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "ActivityStatus",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "SendResult",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "SendMessage",
+      "full_name": "CPMForge.M365.Open.SendMessage",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Sends a new email. Two-step: creates draft (returns ImmutableId) then sends. Never throws on Graph failures \u2014 check Status.Succeeded.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060Draft\u0060: \u0060MailDraft\u0060 (required) - MailDraft with Kind=New. ToRecipients required."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Status\u0060: \u0060ActivityStatus\u0060\r\n- \u0060Result\u0060: \u0060SendResult\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060Draft\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Draft",
+          "direction": "in",
+          "type_name": "MailDraft",
+          "summary": "MailDraft with Kind=New. ToRecipients required.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "ActivityStatus",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "SendResult",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "SendReply",
+      "full_name": "CPMForge.M365.Open.SendReply",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Replies to a message. Two-step: createReply draft (returns ImmutableId) then send. Graph sets threading headers automatically.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060Draft\u0060: \u0060MailDraft\u0060 (required) - MailDraft with SourceImmutableId set."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Status\u0060: \u0060ActivityStatus\u0060\r\n- \u0060Result\u0060: \u0060SendResult\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060Draft\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Draft",
+          "direction": "in",
+          "type_name": "MailDraft",
+          "summary": "MailDraft with SourceImmutableId set.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "ActivityStatus",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "SendResult",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "SendReplyAll",
+      "full_name": "CPMForge.M365.Open.SendReplyAll",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Reply-all to a message. Two-step: createReplyAll draft (returns ImmutableId) then send.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060Draft\u0060: \u0060MailDraft\u0060 (required) - MailDraft with SourceImmutableId set."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Status\u0060: \u0060ActivityStatus\u0060\r\n- \u0060Result\u0060: \u0060SendResult\u0060"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060Draft\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Draft",
+          "direction": "in",
+          "type_name": "MailDraft",
+          "summary": "MailDraft with SourceImmutableId set.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "ActivityStatus",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "SendResult",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "VerifySendCapability",
+      "full_name": "CPMForge.M365.Open.VerifySendCapability",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "VerifySendCapability",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)"
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        }
+      ]
+    },
+    {
+      "name": "WriteExtension",
+      "full_name": "CPMForge.M365.Open.WriteExtension",
+      "namespace": "CPMForge.M365.Open",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Creates or updates the CPMForge open extension on a message (POST to create, PATCH to update).",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Config\u0060: \u0060M365Config\u0060 (required)\r\n- \u0060MessageId\u0060: \u0060string\u0060 (required)\r\n- \u0060ProcessingState\u0060: \u0060string\u0060\r\n- \u0060CaseId\u0060: \u0060string\u0060\r\n- \u0060ExtensionExists\u0060: \u0060bool\u0060 - True \u2192 PATCH (update); False \u2192 POST (create)."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Config\u0060\r\n- \u0060MessageId\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Config",
+          "direction": "in",
+          "type_name": "M365Config",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "MessageId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "ProcessingState",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "CaseId",
+          "direction": "in",
+          "type_name": "string",
+          "summary": null,
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "ExtensionExists",
+          "direction": "in",
+          "type_name": "bool",
+          "summary": "True \u2192 PATCH (update); False \u2192 POST (create).",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-08-15T18:53:21.7838604+00:00",
+  "project": {
+    "name": "CPMForge.Logging.Open",
+    "version": "0.0.1",
+    "description": "MEL-shaped logging abstraction (ILogger/LogLevel) for UiPath coded activities.",
+    "expression_language": "VisualBasic",
+    "target_framework": "Windows"
+  },
+  "provenance": {
+    "generator": "henri libdoc",
+    "generator_version": "0.4.1.0",
+    "project_dir": "D:\\github.com\\cprima-forge\\cpmf-uipsl-logging\\src\\open",
+    "project_json_path": "D:\\github.com\\cprima-forge\\cpmf-uipsl-logging\\src\\open\\project.json",
+    "source_file_count": 7,
+    "documented_activity_count": 1
+  },
+  "activities": [
+    {
+      "name": "LogActivity",
+      "full_name": "CPMForge.Logging.LogActivity",
+      "namespace": "CPMForge.Logging",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Writes a message to the UiPath robot log. Falls back to System.Diagnostics.Trace when running outside the robot.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060Message\u0060: \u0060string\u0060 (required) - The message to log.\r\n- \u0060Level\u0060: \u0060CpmfLogLevel\u0060 - Log level. Defaults to Information."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060Message\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "Message",
+          "direction": "in",
+          "type_name": "string",
+          "summary": "The message to log.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Level",
+          "direction": "in",
+          "type_name": "CpmfLogLevel",
+          "summary": "Log level. Defaults to Information.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    }
+  ]
+}

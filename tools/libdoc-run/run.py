@@ -1,9 +1,11 @@
 """Run `henri uips libdoc` against every open-edition cpmf-uipsl-* repo.
 
 henri (cprima-forge/cpmf-uips-cli) is a dotnet global tool that statically
-parses a UiPath Library's src/open project and emits docs/<Name>.doc.json.
-This centralizes what was previously an ad-hoc, one-off run against
-lib-appintegration-sap.
+parses a UiPath Library's src/open project and emits <Name>.doc.json.
+Output filename is fixed by henri (project.json's "name"), but --out (a
+directory) is overridable, so each repo gets its own subdir under
+data/doc/ in this repo — no scattering of untracked files into the
+library repos themselves.
 
 Requires: `dotnet tool install -g henri` (or `--tool` pointing at the exe).
 
@@ -46,9 +48,12 @@ def main():
             print(f"{name}: SKIP (no {project_json})")
             continue
 
+        out_dir = DATA_DIR / "doc" / name
+        out_dir.mkdir(parents=True, exist_ok=True)
+
         print(f"{name}: running libdoc...")
         result = subprocess.run(
-            [args.tool, "uips", "libdoc", "-p", str(project_json)],
+            [args.tool, "uips", "libdoc", "-p", str(project_json), "--out", str(out_dir)],
             capture_output=True,
             text=True,
         )

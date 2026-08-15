@@ -1,0 +1,1002 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-08-15T18:53:20.7891802+00:00",
+  "project": {
+    "name": "CPMForge.SAP.Open",
+    "version": "0.2.20",
+    "description": "A UiPath library for common SAP automations.",
+    "expression_language": "VisualBasic",
+    "target_framework": "Windows"
+  },
+  "provenance": {
+    "generator": "henri libdoc",
+    "generator_version": "0.4.1.0",
+    "project_dir": "D:\\github.com\\cprima-forge\\cpmf-uipsl-sap\\src\\open",
+    "project_json_path": "D:\\github.com\\cprima-forge\\cpmf-uipsl-sap\\src\\open\\project.json",
+    "source_file_count": 26,
+    "documented_activity_count": 16
+  },
+  "activities": [
+    {
+      "name": "AssertLandscapeSystem",
+      "full_name": "AssertLandscapeSystem",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "AssertLandscapeSystem",
+      "remarks": "Unresolved SapConfig. SystemId is looked up in the landscape catalog. SapLogonDescription is written back from the landscape name when found and not already set.",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Unresolved SapConfig. SystemId is looked up in the landscape catalog. SapLogonDescription is written back from the landscape name when found and not already set."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060io_Config\u0060: \u0060rs:SapConfig\u0060 - Unresolved SapConfig. SystemId is looked up in the landscape catalog. SapLogonDescription is written back from the landscape name when found and not already set.\r\n- \u0060out_IsKnown\u0060: \u0060x:Boolean\u0060 - True if io_Config.SystemId was found in the landscape, or if SystemId is empty (skipped).\r\n- \u0060out_Description\u0060: \u0060x:String\u0060 - SAP Logon display name for in_Config.SystemId. Empty when not found or skipped.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (KNOWN|UNKNOWN|SKIPPED), isSuccess, systemId, description, isComplete."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "io_Config",
+          "direction": "inout",
+          "type_name": "rs:SapConfig",
+          "summary": "Unresolved SapConfig. SystemId is looked up in the landscape catalog. SapLogonDescription is written back from the landscape name when found and not already set.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_IsKnown",
+          "direction": "out",
+          "type_name": "x:Boolean",
+          "summary": "True if io_Config.SystemId was found in the landscape, or if SystemId is empty (skipped).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Description",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "SAP Logon display name for in_Config.SystemId. Empty when not found or skipped.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (KNOWN|UNKNOWN|SKIPPED), isSuccess, systemId, description, isComplete.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "AssertSessionReady",
+      "full_name": "AssertSessionReady",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "AssertSessionReady",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_MaxAttempts\u0060: \u0060x:Int32\u0060 - Maximum session.Busy poll cycles before giving up. Default 3.\r\n- \u0060in_WaitIntervalSec\u0060: \u0060x:Int32\u0060 - Seconds between session.Busy polls. Default 3.\r\n- \u0060out_IsReady\u0060: \u0060x:Boolean\u0060 - True if the session became idle within MaxAttempts.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (READY|BUSY_TIMEOUT), isSuccess, attempts."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_MaxAttempts",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Maximum session.Busy poll cycles before giving up. Default 3.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_WaitIntervalSec",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Seconds between session.Busy polls. Default 3.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_IsReady",
+          "direction": "out",
+          "type_name": "x:Boolean",
+          "summary": "True if the session became idle within MaxAttempts.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (READY|BUSY_TIMEOUT), isSuccess, attempts.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "AssertSystemIdentity",
+      "full_name": "AssertSystemIdentity",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "AssertSystemIdentity",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_ExpectedSid\u0060: \u0060x:String\u0060 - Expected sbar/pane[1] value, e.g. \u0027S01 (1) 100\u0027. Empty string skips the assertion and returns out_IsMatch=True.\r\n- \u0060out_SidObserved\u0060: \u0060x:String\u0060 - Actual sbar/pane[1] value read from the session.\r\n- \u0060out_IsMatch\u0060: \u0060x:Boolean\u0060 - True if observed SID matches expected, or if in_ExpectedSid is empty.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (MATCH|MISMATCH|SKIPPED), isSuccess, expected, observed."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_ExpectedSid",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Expected sbar/pane[1] value, e.g. \u0027S01 (1) 100\u0027. Empty string skips the assertion and returns out_IsMatch=True.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_SidObserved",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Actual sbar/pane[1] value read from the session.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_IsMatch",
+          "direction": "out",
+          "type_name": "x:Boolean",
+          "summary": "True if observed SID matches expected, or if in_ExpectedSid is empty.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (MATCH|MISMATCH|SKIPPED), isSuccess, expected, observed.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "AssertTransaction",
+      "full_name": "AssertTransaction",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "AssertTransaction",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_ExpectedTcode\u0060: \u0060x:String\u0060 - Expected SAP transaction code, e.g. \u0027VF03\u0027. Comparison is case-insensitive.\r\n- \u0060out_ActualTcode\u0060: \u0060x:String\u0060 - Transaction code currently active in the session.\r\n- \u0060out_IsMatch\u0060: \u0060x:Boolean\u0060 - True if out_ActualTcode matches in_ExpectedTcode (case-insensitive).\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (MATCH|MISMATCH), isSuccess, expected, actual."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_ExpectedTcode",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Expected SAP transaction code, e.g. \u0027VF03\u0027. Comparison is case-insensitive.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_ActualTcode",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Transaction code currently active in the session.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_IsMatch",
+          "direction": "out",
+          "type_name": "x:Boolean",
+          "summary": "True if out_ActualTcode matches in_ExpectedTcode (case-insensitive).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (MATCH|MISMATCH), isSuccess, expected, actual.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "AttachSession",
+      "full_name": "AttachSession",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "AttachSession",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_ExpectedSid\u0060: \u0060x:String\u0060 - Expected sbar/pane[1] value, e.g. \u0027S01 (1) 100\u0027. Empty string skips the assertion.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (ATTACHED|ERROR), isSuccess, connection, session, sid."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_ExpectedSid",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Expected sbar/pane[1] value, e.g. \u0027S01 (1) 100\u0027. Empty string skips the assertion.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (ATTACHED|ERROR), isSuccess, connection, session, sid.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "CloseConnection",
+      "full_name": "CloseConnection",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "CloseConnection",
+      "remarks": "Resolved SAP session handle. All sessions on this connection are closed.",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle. All sessions on this connection are closed."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle. All sessions on this connection are closed.\r\n- \u0060in_HardKillOnFailure\u0060: \u0060x:Boolean\u0060 - When True: kill the SAP process if no sessions could be closed. Default False.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess, connection, sessionsCount."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle. All sessions on this connection are closed.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_HardKillOnFailure",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "When True: kill the SAP process if no sessions could be closed. Default False.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess, connection, sessionsCount.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "CloseSapLogon",
+      "full_name": "CloseSapLogon",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "CloseSapLogon",
+      "remarks": "When True: fall back to KillSapProcess if GuiApplication.Quit() fails. Default False.",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "When True: fall back to KillSapProcess if GuiApplication.Quit() fails. Default False."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_HardKillOnFailure\u0060: \u0060x:Boolean\u0060 - When True: fall back to KillSapProcess if GuiApplication.Quit() fails. Default False.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_HardKillOnFailure",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "When True: fall back to KillSapProcess if GuiApplication.Quit() fails. Default False.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "CloseSession",
+      "full_name": "CloseSession",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "CloseSession",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_HardKillOnFailure\u0060: \u0060x:Boolean\u0060 - When True: kill the SAP process if graceful close fails. Default False.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess, connection, session."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_HardKillOnFailure",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "When True: kill the SAP process if graceful close fails. Default False.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (CLOSED|KILLED|ERROR), isSuccess, connection, session.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "DumpAllWindows",
+      "full_name": "DumpAllWindows",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "DumpAllWindows",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_MaxDepth\u0060: \u0060x:Int32\u0060 - Maximum recursion depth per window. Default 10 \u2014 covers SAP\u0027s deepest observed tabstrip/subscreen nesting on master-data screens.\r\n- \u0060in_IncludeMenu\u0060: \u0060x:Boolean\u0060 - Include the menu bar subtree. Default False \u2014 menu is static/screen-independent noise for failure forensics.\r\n- \u0060out_Dump\u0060: \u0060x:String\u0060 - Dump of every currently open window (wnd[0], wnd[1], ...), one line per element."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_MaxDepth",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Maximum recursion depth per window. Default 10 \u2014 covers SAP\u0027s deepest observed tabstrip/subscreen nesting on master-data screens.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_IncludeMenu",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "Include the menu bar subtree. Default False \u2014 menu is static/screen-independent noise for failure forensics.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Dump",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Dump of every currently open window (wnd[0], wnd[1], ...), one line per element.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "DumpWindowTree",
+      "full_name": "DumpWindowTree",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "DumpWindowTree",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_Id\u0060: \u0060x:String\u0060 - Root element id to walk. Default \u0027wnd[0]\u0027.\r\n- \u0060in_MaxDepth\u0060: \u0060x:Int32\u0060 - Maximum recursion depth. Default 10 \u2014 covers SAP\u0027s deepest observed tabstrip/subscreen nesting on master-data screens.\r\n- \u0060in_IncludeMenu\u0060: \u0060x:Boolean\u0060 - Include the menu bar subtree. Default False \u2014 menu is static/screen-independent noise for failure forensics.\r\n- \u0060out_Dump\u0060: \u0060x:String\u0060 - One line per element: Id | Type | Name | Text | ScreenLeft,ScreenTop WxH | Pressable."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_Id",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Root element id to walk. Default \u0027wnd[0]\u0027.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_MaxDepth",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Maximum recursion depth. Default 10 \u2014 covers SAP\u0027s deepest observed tabstrip/subscreen nesting on master-data screens.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_IncludeMenu",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "Include the menu bar subtree. Default False \u2014 menu is static/screen-independent noise for failure forensics.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Dump",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "One line per element: Id | Type | Name | Text | ScreenLeft,ScreenTop WxH | Pressable.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "FlushLoginPopups",
+      "full_name": "FlushLoginPopups",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "FlushLoginPopups",
+      "remarks": "Zero-based SAP connection index. Pass -1 (default) to handle all connections.",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Zero-based SAP connection index. Pass -1 (default) to handle all connections."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Connection\u0060: \u0060x:Int32\u0060 - Zero-based SAP connection index. Pass -1 (default) to handle all connections.\r\n- \u0060in_Session\u0060: \u0060x:Int32\u0060 - Zero-based SAP session index within in_Connection. Pass -1 (default) to handle all sessions. Requires in_Connection \u003E= 0.\r\n- \u0060in_IniPath\u0060: \u0060x:String\u0060 - Absolute path to post_login_popups.ini. Empty (default) = library-bundled scripts\\SAP\\post_login_popups.ini is used. Supply an absolute path to override with a consuming-process-specific ruleset.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational status dict. Keys (strip prefix): result, isSuccess, connection, session, handled.\r\n- \u0060out_Result\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Domain result dict. Keys (strip prefix): finalTx, finalTitle, type, rule, reason, policy, message, title, text.\r\n- \u0060out_Rows\u0060: \u0060sd:DataTable\u0060 - Full TSV result as DataTable \u2014 one row per SAP session processed.\r\n- \u0060in_LibraryRoot\u0060: \u0060x:String\u0060 - Root content folder of the library package (SapConfig.LibraryRoot). Used to locate flush_login_popups.vbs and the default post_login_popups.ini."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Connection",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Zero-based SAP connection index. Pass -1 (default) to handle all connections.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "x:Int32",
+          "summary": "Zero-based SAP session index within in_Connection. Pass -1 (default) to handle all sessions. Requires in_Connection \u003E= 0.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_IniPath",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Absolute path to post_login_popups.ini. Empty (default) = library-bundled scripts\\SAP\\post_login_popups.ini is used. Supply an absolute path to override with a consuming-process-specific ruleset.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational status dict. Keys (strip prefix): result, isSuccess, connection, session, handled.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Result",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Domain result dict. Keys (strip prefix): finalTx, finalTitle, type, rule, reason, policy, message, title, text.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Rows",
+          "direction": "out",
+          "type_name": "sd:DataTable",
+          "summary": "Full TSV result as DataTable \u2014 one row per SAP session processed.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_LibraryRoot",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Root content folder of the library package (SapConfig.LibraryRoot). Used to locate flush_login_popups.vbs and the default post_login_popups.ini.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "GetEffectiveConfig",
+      "full_name": "CPMForge.SAP.GetEffectiveConfig",
+      "namespace": "CPMForge.SAP",
+      "kind": "coded",
+      "visibility": "public",
+      "summary": "Resolves the effective runtime SapConfig from a CodedSapConfig.",
+      "remarks": null,
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060ConFigTree\u0060: \u0060Cpmf.Config.CodedSapConfig\u0060 (required) - Resolved configuration tree containing the SAP section."
+        },
+        {
+          "id": "outputs",
+          "title": "Outputs",
+          "body": "- \u0060Payload\u0060: \u0060CPMForge.SAP.SapConfig\u0060 - Effective typed SAP configuration after merge.\r\n- \u0060Result\u0060: \u0060Dictionary\u003Cstring, object\u003E\u0060 - Diagnostic data for caller observability.\r\n- \u0060Status\u0060: \u0060Dictionary\u003Cstring, object\u003E\u0060 - Execution status metadata."
+        },
+        {
+          "id": "required-flags",
+          "title": "Required Flags",
+          "body": "- \u0060ConFigTree\u0060"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "ConFigTree",
+          "direction": "in",
+          "type_name": "Cpmf.Config.CodedSapConfig",
+          "summary": "Resolved configuration tree containing the SAP section.",
+          "default_value": null,
+          "is_required": true
+        },
+        {
+          "name": "Payload",
+          "direction": "out",
+          "type_name": "CPMForge.SAP.SapConfig",
+          "summary": "Effective typed SAP configuration after merge.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Result",
+          "direction": "out",
+          "type_name": "Dictionary\u003Cstring, object\u003E",
+          "summary": "Diagnostic data for caller observability.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "Status",
+          "direction": "out",
+          "type_name": "Dictionary\u003Cstring, object\u003E",
+          "summary": "Execution status metadata.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "LaunchAndLogin",
+      "full_name": "LaunchAndLogin",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "LaunchAndLogin",
+      "remarks": "SapConfig from GetEffectiveConfig. The same instance can be reused for multiple LaunchAndLogin calls (e.g. two parallel connections to the same system).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "SapConfig from GetEffectiveConfig. The same instance can be reused for multiple LaunchAndLogin calls (e.g. two parallel connections to the same system)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Config\u0060: \u0060rs:SapConfig\u0060 - SapConfig from GetEffectiveConfig. The same instance can be reused for multiple LaunchAndLogin calls (e.g. two parallel connections to the same system).\r\n- \u0060out_Session\u0060: \u0060rs:SapSession\u0060 - Resolved session handle. Pass to all subsequent library activities that require a live SAP connection.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys: result (LOGGED_IN|BAD_CREDENTIAL|ERROR), isSuccess."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Config",
+          "direction": "in",
+          "type_name": "rs:SapConfig",
+          "summary": "SapConfig from GetEffectiveConfig. The same instance can be reused for multiple LaunchAndLogin calls (e.g. two parallel connections to the same system).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Session",
+          "direction": "out",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved session handle. Pass to all subsequent library activities that require a live SAP connection.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys: result (LOGGED_IN|BAD_CREDENTIAL|ERROR), isSuccess.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "NavigateToTransaction",
+      "full_name": "NavigateToTransaction",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "NavigateToTransaction",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060in_Tcode\u0060: \u0060x:String\u0060 - Transaction code to navigate to, e.g. \u0027VF03\u0027. Sent as /nTCODE to the command field.\r\n- \u0060out_IsSuccess\u0060: \u0060x:Boolean\u0060 - True if session.Info.Transaction matches in_Tcode after navigation.\r\n- \u0060out_ActualTcode\u0060: \u0060x:String\u0060 - Transaction code observed in session.Info.Transaction after navigation.\r\n- \u0060out_SbarText\u0060: \u0060x:String\u0060 - Status bar message text (sbar/pane[0].Text) after navigation.\r\n- \u0060out_SbarType\u0060: \u0060x:String\u0060 - Status bar message type (sbar/pane[0].MessageType) after navigation: S W E A I.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (NAVIGATED|ERROR), isSuccess, tcode, actualTcode, sbarText, sbarType."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_Tcode",
+          "direction": "in",
+          "type_name": "x:String",
+          "summary": "Transaction code to navigate to, e.g. \u0027VF03\u0027. Sent as /nTCODE to the command field.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_IsSuccess",
+          "direction": "out",
+          "type_name": "x:Boolean",
+          "summary": "True if session.Info.Transaction matches in_Tcode after navigation.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_ActualTcode",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Transaction code observed in session.Info.Transaction after navigation.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_SbarText",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Status bar message text (sbar/pane[0].Text) after navigation.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_SbarType",
+          "direction": "out",
+          "type_name": "x:String",
+          "summary": "Status bar message type (sbar/pane[0].MessageType) after navigation: S W E A I.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (NAVIGATED|ERROR), isSuccess, tcode, actualTcode, sbarText, sbarType.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "NormalizeBlankSlate",
+      "full_name": "NormalizeBlankSlate",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "NormalizeBlankSlate",
+      "remarks": "Resolved SAP session handle (connection and session index).",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle (connection and session index)."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle (connection and session index).\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (OK|FAILED|ERROR), isSuccess, connection, session."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle (connection and session index).",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (OK|FAILED|ERROR), isSuccess, connection, session.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    },
+    {
+      "name": "OpenSession",
+      "full_name": "OpenSession",
+      "namespace": null,
+      "kind": "xaml",
+      "visibility": "public",
+      "summary": "OpenSession",
+      "remarks": "Resolved SAP session handle. The new session is opened on the same connection.",
+      "return_type_name": null,
+      "return_summary": null,
+      "error_cases": null,
+      "side_effects": null,
+      "usage_example": null,
+      "sections": [
+        {
+          "id": "notes",
+          "title": "Notes",
+          "body": "Resolved SAP session handle. The new session is opened on the same connection."
+        },
+        {
+          "id": "inputs",
+          "title": "Inputs",
+          "body": "- \u0060in_Session\u0060: \u0060rs:SapSession\u0060 - Resolved SAP session handle. The new session is opened on the same connection.\r\n- \u0060in_FallbackToExisting\u0060: \u0060x:Boolean\u0060 - When True: if opening a new session fails (e.g. session limit reached), fall back to the last existing session on the connection instead of erroring. Default False.\r\n- \u0060out_Session\u0060: \u0060rs:SapSession\u0060 - Session handle for the opened or attached session. Nothing on ERROR.\r\n- \u0060out_Status\u0060: \u0060scg:Dictionary(x:String, x:Object)\u0060 - Operational result. Keys (strip prefix): result (OPENED|ATTACHED|ERROR), isSuccess, connection, session."
+        }
+      ],
+      "arguments": [
+        {
+          "name": "in_Session",
+          "direction": "in",
+          "type_name": "rs:SapSession",
+          "summary": "Resolved SAP session handle. The new session is opened on the same connection.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "in_FallbackToExisting",
+          "direction": "in",
+          "type_name": "x:Boolean",
+          "summary": "When True: if opening a new session fails (e.g. session limit reached), fall back to the last existing session on the connection instead of erroring. Default False.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Session",
+          "direction": "out",
+          "type_name": "rs:SapSession",
+          "summary": "Session handle for the opened or attached session. Nothing on ERROR.",
+          "default_value": null,
+          "is_required": false
+        },
+        {
+          "name": "out_Status",
+          "direction": "out",
+          "type_name": "scg:Dictionary(x:String, x:Object)",
+          "summary": "Operational result. Keys (strip prefix): result (OPENED|ATTACHED|ERROR), isSuccess, connection, session.",
+          "default_value": null,
+          "is_required": false
+        }
+      ]
+    }
+  ]
+}

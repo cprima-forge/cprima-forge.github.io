@@ -4,7 +4,8 @@
 # in/out arguments) per library, from a parseable source each library commits to.
 #
 # This file defines the convention + per-library compliance status.
-# Not yet generated — no generator script exists yet.
+# The catalog generator itself (rendering the PM-style list from doc.json)
+# is not yet implemented.
 
 convention:
   plus:
@@ -16,28 +17,28 @@ convention:
       - "/// <summary>...</summary> on the activity class"
       - "/// <summary>...</summary> on each InArgument<T>/OutArgument<T> property"
       - "[Category(\"CPMForge.<Lib>\")] attribute on the class"
-    parser: not implemented
+    generator: not implemented   # no henri equivalent for plus/C# yet
 
   open:
     description: >
       UiPath Studio workflows (src/open/**/*.xaml) exposed as library
-      activities. Source of truth is a companion doc.json (see
-      cpmf-uipsl-sap/docs/CPMForge.SAP.doc.json for the existing example)
-      plus one docs/*.md per activity.
+      activities. Source of truth is src/open/docs/<Name>.doc.json,
+      produced by `henri uips libdoc -p src/open/project.json`
+      (cprima-forge/cpmf-uips-cli). Statically parses XAML Annotation
+      text + argument comments — no Studio session required.
     required:
-      - "docs/<Lib>.doc.json — array of {activity, description, arguments[]}"
-      - "docs/<activity>.md — human-readable detail, one per activity"
-    parser: not implemented
+      - "src/open/docs/*.doc.json — generated, not hand-authored"
+    generator: tools/libdoc-run/run.py   # wraps `henri uips libdoc` across all repos in data/libraries.yaml
 
 libraries:
   - name: cpmf-uipsl-sap
     edition: open
-    source_present: true      # docs/CPMForge.SAP.doc.json + docs/*.md exist
+    source_present: true      # src/open/docs/CPMForge.SAP.Open.doc.json (+ legacy root docs/ copy)
     parser_wired: false
 
   - name: cpmf-uipsl-logging
     edition: open
-    source_present: false
+    source_present: true      # src/open/docs/CPMForge.Logging.Open.doc.json
     parser_wired: false
 
   - name: cpmf-uipsl-sftp
@@ -47,12 +48,12 @@ libraries:
 
   - name: cpmf-uipsl-m365
     edition: open+plus
-    source_present: unknown
+    source_present: true      # open: src/open/docs/CPMForge.M365.Open.doc.json; plus: unknown
     parser_wired: false
 
   - name: cpmf-uipsl-rpachallenge
     edition: open
-    source_present: false
+    source_present: true      # src/open/docs/cpmf-uipsl-rpachallenge.doc.json (project name unset in project.json)
     parser_wired: false
 
   - name: cpmf-uipsl-config

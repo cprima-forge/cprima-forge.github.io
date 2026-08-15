@@ -24,6 +24,11 @@ def load_libraries():
 
 
 def check_open(repo_path: Path) -> bool:
+    # henri libdoc default output: src/open/docs/*.doc.json
+    docs = repo_path / "src" / "open" / "docs"
+    if docs.is_dir() and any(docs.glob("*.doc.json")):
+        return True
+    # legacy manual location
     docs = repo_path / "docs"
     return docs.is_dir() and any(docs.glob("*.doc.json"))
 

@@ -48,17 +48,24 @@
       "artefacts": [
         {
           "id": "CPMForge.M365.Open",
-          "kind": "nupkg",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
           "edition": "open"
         },
         {
           "id": "CPMForge.M365.Plus",
-          "kind": "nupkg",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
           "edition": "plus"
         }
       ],
       "offers": [
         {
+          "artefacts": [
+            "CPMForge.M365.Open"
+          ],
           "sku": "m365-open",
           "name": "M365 Open",
           "price": {
@@ -74,6 +81,10 @@
           ]
         },
         {
+          "artefacts": [
+            "CPMForge.M365.Open",
+            "CPMForge.M365.Plus"
+          ],
           "sku": "m365-plus-annual",
           "name": "M365 Plus",
           "price": {
@@ -99,7 +110,12 @@
       "artefacts": [
         {
           "id": "cpmforge.cpmf-workflow-lens",
-          "kind": "vsix"
+          "kind": "software",
+          "format": "vsix",
+          "fulfillment": "download",
+          "identifiers": {
+            "vscode-marketplace": "cpmforge.cpmf-workflow-lens"
+          }
         }
       ],
       "licensed": true,
@@ -111,18 +127,18 @@
             "amount": 0,
             "currency": "EUR"
           },
-          "duration": "30d",
-          "seat_model": "unlimited-machines",
           "status": "active",
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ],
           "highlights": [
             "Transclusion across invoked workflows",
             "Contract checking at call sites",
             "Un-composition"
+          ],
+          "duration": "30d",
+          "seat_model": "unlimited-machines",
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
           ]
         }
       ]

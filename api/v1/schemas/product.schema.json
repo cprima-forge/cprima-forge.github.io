@@ -24,11 +24,34 @@
       "description": "What is actually delivered, by the identity the producing repo publishes under. This is the join to manifest.json and to doc.json, and it is why a SKU can be checked against something that really exists.",
       "items": {
         "type": "object",
-        "required": ["id", "kind"],
+        "required": ["id", "kind", "format"],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "description": "The identity the producing repo publishes under, e.g. cpmforge.cpmf-workflow-lens" },
-          "kind": { "type": "string", "enum": ["vsix", "nupkg", "installer"] },
+          "id": {
+            "type": "string",
+            "description": "OUR stable identity for this artefact. Externally assigned identities live under `identifiers`, never here."
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["software", "publication"],
+            "description": "What sort of thing it is. Previously this field held vsix/nupkg/installer, which are formats and a software-only vocabulary — so nothing that was not a software package could be described at all."
+          },
+          "format": {
+            "type": "string",
+            "enum": ["vsix", "nupkg", "installer", "epub", "pdf", "paperback", "hardcover"],
+            "description": "The concrete form it takes. Formats are added as real artefacts require them, not in anticipation."
+          },
+          "fulfillment": {
+            "type": "string",
+            "enum": ["download", "shipment"],
+            "description": "How it reaches the holder. Deliberately NOT the top-level taxonomy: a book is one product with both downloadable and shipped artefacts, so digital-versus-physical is a property of the artefact and never of the product."
+          },
+          "identifiers": {
+            "type": "object",
+            "additionalProperties": { "type": "string" },
+            "description": "Identities assigned by somebody else, namespaced by who assigned them — isbn, gtin, vscode-marketplace. Our own id stays ours; a foreign identity is a join to their system, not a replacement for it.",
+            "examples": [{ "isbn": "9781234567890" }, { "vscode-marketplace": "cpmforge.cpmf-workflow-lens" }]
+          },
           "edition": { "type": "string", "enum": ["open", "plus"], "description": "Mirrors libraries.yaml. Omit where the product has no edition split." }
         }
       }
@@ -42,9 +65,9 @@
   "$defs": {
     "offer": {
       "type": "object",
-      "required": ["sku", "name", "price", "duration", "seat_model", "grants"],
+      "required": ["sku", "name", "price"],
       "additionalProperties": false,
-      "description": "One way to buy one product. The SKU is what an order references and what a provider maps to, so it is permanent once used.",
+      "description": "One way to obtain one product. The SKU is what an order references and what a downstream capability maps to, so it is permanent once used.\n\nThe required core is deliberately tiny: an identity, a label, a price. `duration`, `renewal`, `seat_model`, `seats`, `eligible_for` and `grants` are LICENSING terms and are optional — requiring them forced every offer to be shaped like a software licence, so a paperback had to invent a seat model and a duration in order to exist at all. An offer is a way to obtain something; it is not necessarily a way to license something.",
       "properties": {
         "sku": {
           "type": "string",

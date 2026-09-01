@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge.cprima.net/api/v1/schemas/entitlements.schema.json",
+  "title": "entitlement vocabulary",
+  "description": "The closed set of things an offer may grant, and the seat models it may use. Closed on purpose: a grant that is not listed here is a typo, and a typo that validates is a customer who paid for nothing.",
+  "type": "object",
+  "required": ["entitlements", "seat_models"],
+  "additionalProperties": false,
+  "properties": {
+    "entitlements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "description": {
+            "type": "string",
+            "description": "What the holder may do. Never how it is enforced, and never by which provider."
+          }
+        }
+      }
+    },
+    "seat_models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

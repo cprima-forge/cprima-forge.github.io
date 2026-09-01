@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- data-fa-kit-code enables Pro icons anywhere on the page. The kit code is
+     domain-locked to forge.cprima.net, so it is safe in public HTML — unlike
+     the npm auth token, which must never be committed, and unlike Pro font or
+     dist files, which must never be committed to this repository because it is
+     public and committing them would redistribute them. -->
+<html lang="en" data-fa-kit-code="5df958b77d">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>cprima-forge</title>
+
+<!-- Web Awesome: theme, utilities, native reset, then the autoloader. -->
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/themes/default.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/utilities.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/native.css">
+<script type="module" src="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/webawesome.loader.js"></script>
+
+<!-- Last, so the identity overrides Web Awesome's defaults rather than the
+     other way round. native.css is a reset and must come before it. -->
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<h1>cprima-forge</h1>
-<p><a href="https://github.com/cprima-forge">github.com/cprima-forge</a></p>
+<main>
+  <h1>cprima-forge</h1>
+  <p class="muted">Tooling for robotic process automation development.</p>
+
+  <article class="card">
+    <h2><i class="fa-solid fa-box-open"></i> Products</h2>
+    <p class="muted">What is on offer, generated from the catalog.</p>
+    <p><a href="/products/">Browse products →</a></p>
+  </article>
+
+  <article class="card">
+    <h2><i class="fa-solid fa-key"></i> Licence</h2>
+    <p class="muted">Request a key, or check one you already have.</p>
+    <p><a href="/licence/">Licence →</a></p>
+  </article>
+
+  <p class="meta">
+    <a href="https://github.com/cprima-forge">github.com/cprima-forge</a>
+    · <a href="/api/v1/catalog.json">catalog.json</a>
+  </p>
+</main>
 </body>
 </html>

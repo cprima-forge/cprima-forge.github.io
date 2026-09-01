@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-fa-kit-code="5df958b77d">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Licence — cprima-forge</title>
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/themes/default.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/utilities.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/native.css">
+<script type="module" src="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/webawesome.loader.js"></script>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  form { display: grid; gap: 1rem; max-width: 26rem; }
+  .field { display: grid; gap: .3rem; }
+  .hint { color: var(--base1); font-size: .85rem; }
+  .ok { border: 1px solid var(--green); border-left-width: 3px; border-radius: 6px; padding: 1rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1><i class="fa-solid fa-key"></i> Request a licence key</h1>
+  <p class="muted">Free offers only. The key is sent to the address you give.</p>
+
+  <article class="card">
+    <form id="f">
+      <div class="field">
+        <label for="sku">Product</label>
+        <select id="sku" name="sku" required>
+          <option value="">Loading…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="email"
+               placeholder="you@example.com">
+        <span class="hint">
+          The key is emailed here, and the licence is issued to this address.
+          It is the only way to get the key back later.
+        </span>
+      </div>
+
+      <div>
+        <button type="submit" id="go">
+          <i class="fa-solid fa-paper-plane"></i> Send me a key
+        </button>
+      </div>
+    </form>
+    <div id="msg" hidden></div>
+  </article>
+
+  <p class="meta"><a href="/products/">← All products</a></p>
+</main>
+
+<script>
+// Where the secrets live. This page holds none: minting a licence needs a
+// Keygen admin token and sending mail needs a provider token, and anything in
+// a static page is public. So the page collects input and the worker does the
+// privileged work.
+// A custom domain, not *.workers.dev: that hostname appears on shared
+// corporate blocklists, and the people who need a key are behind exactly that
+// kind of proxy. jerm.uk because its zone is already on the Cloudflare account
+// — licence.cprima.net would need the whole zone moved off INWX, along with
+// the DKIM records that make mail work, since Cloudflare's subdomain zones are
+// Enterprise-only.
+const API = "https://licence.jerm.uk";
+
+const $ = id => document.getElementById(id);
+const show = (cls, text) => {
+  const m = $("msg");
+  m.hidden = false;
+  m.className = cls;
+  m.textContent = text;
+};
+
+// Offers come from the catalog, so this page never hardcodes a SKU. Only free
+// and active ones: anything else cannot be self-served and listing it would
+// promise something this form cannot deliver.
+fetch("/api/v1/catalog.json")
+  .then(r => r.json())
+  .then(cat => {
+    const sel = $("sku");
+    sel.textContent = "";
+    const wanted = new URLSearchParams(location.search).get("sku");
+    const offers = cat.products.flatMap(p =>
+      p.offers.filter(o => o.status === "active" && o.price.amount === 0)
+              .map(o => ({ ...o, product: p.name })));
+
+    if (!offers.length) {
+      sel.innerHTML = "<option value=''>Nothing available</option>";
+      $("go").disabled = true;
+      return;
+    }
+    for (const o of offers) {
+      const opt = document.createElement("option");
+      opt.value = o.sku;
+      opt.textContent = `${o.product} — ${o.name}`;
+      if (o.sku === wanted) opt.selected = true;
+      sel.append(opt);
+    }
+  })
+  .catch(() => {
+    $("sku").innerHTML = "<option value=''>Catalog unavailable</option>";
+    $("go").disabled = true;
+  });
+
+$("f").addEventListener("submit", async e => {
+  e.preventDefault();
+  const go = $("go");
+  go.disabled = true;
+  show("muted", "Sending…");
+
+  try {
+    const r = await fetch(API + "/free-key", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sku: $("sku").value, email: $("email").value }),
+    });
+    const body = await r.json().catch(() => ({}));
+
+    if (r.ok) {
+      // Deliberately does NOT show the key. The point of the email is to prove
+      // the address works; printing the key here would make the email
+      // decorative and let anyone harvest keys for addresses they do not own.
+      show("ok", "Sent. Check your inbox — and your spam folder.");
+      $("f").reset();
+    } else if (r.status === 429) {
+      show("error", body.error || "A key was already sent recently. Try again later.");
+    } else {
+      show("error", body.error || `Something went wrong (HTTP ${r.status}).`);
+    }
+  } catch {
+    // A network failure and a CORS rejection look identical here by design;
+    // the browser does not tell the page which it was.
+    show("error", "Could not reach the licence service.");
+  } finally {
+    go.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

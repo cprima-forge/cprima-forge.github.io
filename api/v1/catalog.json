@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "entitlements": [
+    {
+      "id": "use",
+      "description": "Run the artefact for its intended purpose. The baseline grant; a product that grants nothing else still grants this.\n"
+    },
+    {
+      "id": "use-commercial",
+      "description": "Use in work performed for payment, including by an organisation. Distinct from `use` so a free tier can be limited to evaluation and personal use without changing anything about the artefact itself.\n"
+    },
+    {
+      "id": "source",
+      "description": "Receive the preferred form for making modifications. Relevant where the published artefact is compiled and the sources are not otherwise shipped.\n"
+    },
+    {
+      "id": "support",
+      "description": "A response to a report, rather than best effort. Says nothing about a time bound; that belongs to the offer, not the grant.\n"
+    },
+    {
+      "id": "updates",
+      "description": "Continue to receive new versions. Bounded by `duration` on the offer when it is not perpetual.\n"
+    }
+  ],
+  "seat_models": [
+    {
+      "id": "single-user",
+      "description": "One named person, any number of their own machines."
+    },
+    {
+      "id": "per-machine",
+      "description": "A fixed number of activations, machine-bound."
+    },
+    {
+      "id": "site",
+      "description": "Unlimited within one organisation."
+    },
+    {
+      "id": "unlimited-machines",
+      "description": "Any number of machines for one holder. Distinct from `site`, which is bounded by an organisation: this is bounded by nothing. Enforcement still applies a practical ceiling to catch pathological use, but that number is not a term of the offer and is not stated here.\n"
+    }
+  ],
+  "products": [
+    {
+      "product": "m365",
+      "name": "M365",
+      "summary": "Microsoft 365 automation for RPA workflows: mail, folders, attachments, Graph-backed.\n",
+      "artefacts": [
+        {
+          "id": "CPMForge.M365.Open",
+          "kind": "nupkg",
+          "edition": "open"
+        },
+        {
+          "id": "CPMForge.M365.Plus",
+          "kind": "nupkg",
+          "edition": "plus"
+        }
+      ],
+      "offers": [
+        {
+          "sku": "m365-open",
+          "name": "M365 Open",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "duration": "perpetual",
+          "seat_model": "single-user",
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ]
+        },
+        {
+          "sku": "m365-plus-annual",
+          "name": "M365 Plus",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "duration": "annual",
+          "seat_model": "per-machine",
+          "seats": 1,
+          "grants": [
+            "use",
+            "use-commercial",
+            "support",
+            "updates"
+          ]
+        }
+      ]
+    },
+    {
+      "product": "workflow-lens",
+      "name": "Workflow Lens",
+      "summary": "Read a whole RPA process rather than one file at a time: invoked workflows grafted into one model, with contract checking and un-composition.\n",
+      "artefacts": [
+        {
+          "id": "cpmforge.cpmf-workflow-lens",
+          "kind": "vsix"
+        }
+      ],
+      "offers": [
+        {
+          "sku": "workflow-lens-free",
+          "name": "Workflow Lens",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "duration": "30d",
+          "seat_model": "unlimited-machines",
+          "status": "active",
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ],
+          "highlights": [
+            "Transclusion across invoked workflows",
+            "Contract checking at call sites",
+            "Un-composition"
+          ]
+        }
+      ]
+    }
+  ]
+}

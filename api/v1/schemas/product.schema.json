@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge.cprima.net/api/v1/schemas/product.schema.json",
+  "title": "catalog product",
+  "description": "One sellable product, in data/products/<product>.yaml. A product is a thing a buyer recognises; an offer is one way to buy it. The two are separate because the same product is commonly sold as a free edition and a paid one, and because a price change must not require restating what the product is.",
+  "type": "object",
+  "required": ["product", "name", "summary", "artefacts", "offers"],
+  "additionalProperties": false,
+  "properties": {
+    "product": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Stable identifier, matching the filename. Never reused for something else once an order has referenced it."
+    },
+    "name": { "type": "string", "description": "How it is written on the storefront." },
+    "summary": { "type": "string", "description": "One or two sentences. What it does, not how." },
+    "artefacts": {
+      "type": "array",
+      "minItems": 1,
+      "description": "What is actually delivered, by the identity the producing repo publishes under. This is the join to manifest.json and to doc.json, and it is why a SKU can be checked against something that really exists.",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "e.g. cpmforge.cpmf-workflow-lens, CPMForge.M365.Plus" },
+          "kind": { "type": "string", "enum": ["vsix", "nupkg", "installer"] },
+          "edition": { "type": "string", "enum": ["open", "plus"], "description": "Mirrors libraries.yaml. Omit where the product has no edition split." }
+        }
+      }
+    },
+    "offers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/offer" }
+    }
+  },
+  "$defs": {
+    "offer": {
+      "type": "object",
+      "required": ["sku", "name", "price", "duration", "seat_model", "grants"],
+      "additionalProperties": false,
+      "description": "One way to buy one product. The SKU is what an order references and what a provider maps to, so it is permanent once used.",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Permanent. Changing a SKU orphans every order that referenced it; retire it and add a new one instead."
+        },
+        "name": { "type": "string" },
+        "price": {
+          "type": "object",
+          "required": ["amount", "currency"],
+          "additionalProperties": false,
+          "description": "Always stated, including zero. An absent price and a free price must never look the same.",
+          "properties": {
+            "amount": { "type": "number", "minimum": 0 },
+            "currency": { "type": "string", "enum": ["EUR", "USD"] }
+          }
+        },
+        "duration": {
+          "type": "string",
+          "oneOf": [
+            { "enum": ["perpetual", "annual", "monthly"] },
+            { "pattern": "^[1-9][0-9]*d$", "description": "An explicit number of days, e.g. 30d." }
+          ],
+          "description": "A licensing period is not always a calendar one: the free tier lapses every 30 days, which is neither monthly nor annual, and the enforcement layer counts seconds. Named durations stay for the common cases."
+        },
+        "renewal": {
+          "type": "string",
+          "enum": ["none", "renew", "reissue"],
+          "description": "What happens at the end of `duration`. `renew` extends the same licence and keeps its key; `reissue` replaces it with a new one, which is the only way to move a holder onto different terms. `none` means it simply lapses."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "planned", "on-demand", "retired"],
+          "description": "Whether this offer can be bought today. A retired SKU stays in the file forever because orders still reference it."
+        },
+        "eligible_for": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" },
+          "description": "Who may take this offer, in the vendor's own vocabulary (e.g. Community, ProOrEnterprise). A commercial condition, not an enforcement mechanism."
+        },
+        "channels": {
+          "type": "array",
+          "description": "Where this offer can be obtained, and between which dates. An offer with no open channel is not purchasable, whatever its status says.",
+          "items": {
+            "type": "object",
+            "required": ["channel"],
+            "additionalProperties": false,
+            "properties": {
+              "channel": { "type": "string", "enum": ["manual", "self-service", "gumroad", "stripe"] },
+              "valid_from": { "type": "string", "format": "date" },
+              "valid_thru": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "highlights": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Storefront bullets. Prose for a human, never read by code."
+        },
+        "seat_model": { "type": "string", "enum": ["single-user", "per-machine", "site", "unlimited-machines"] },
+        "seats": { "type": "integer", "minimum": 1, "description": "Required by per-machine; meaningless otherwise." },
+        "grants": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string" },
+          "description": "Validated against data/entitlements.yaml, so a typo cannot silently grant nothing."
+        },
+        "artefacts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Which of the product's artefacts this offer covers. Omit to mean all of them. Validated against the product's own artefact ids."
+        },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

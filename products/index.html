@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-fa-kit-code="5df958b77d">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Products — cprima-forge</title>
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/themes/default.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/utilities.css">
+<link rel="stylesheet" href="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/styles/native.css">
+<script type="module" src="https://ka-p.webawesome.com/kit/9d55e66325f84b80/webawesome@3.12.0/webawesome.loader.js"></script>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<main>
+  <h1>Products</h1>
+  <p class="muted">Generated from the catalog. <a href="/api/v1/catalog.json">catalog.json</a></p>
+  <div id="out">Loading…</div>
+</main>
+<script>
+// The page renders data it fetches; it never hardcodes a product, a price or a
+// tier. Adding an offer is a catalog edit and a rebuild, never an HTML edit —
+// which is the whole reason the catalog is the source of truth.
+const money = p =>
+  p.amount === 0 ? "Free"
+  : p.amount == null ? "Price on request"
+  : new Intl.NumberFormat(undefined, { style: "currency", currency: p.currency }).format(p.amount);
+
+const DURATION = { perpetual: "one-off", annual: "per year", monthly: "per month" };
+const term = d => DURATION[d] ?? `every ${d.replace(/d$/, " days")}`;
+
+fetch("/api/v1/catalog.json")
+  .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+  .then(cat => {
+    const out = document.getElementById("out");
+    out.textContent = "";
+    for (const p of cat.products) {
+      const art = document.createElement("article");
+      art.className = "card";
+      const h = document.createElement("h2");
+      h.textContent = p.name;
+      const s = document.createElement("p");
+      s.className = "muted";
+      s.textContent = p.summary;
+      art.append(h, s);
+
+      for (const o of p.offers) {
+        // A planned or retired offer is real catalog data, but showing it as
+        // purchasable would be a lie, so it is labelled rather than hidden.
+        const d = document.createElement("div");
+        d.className = "offer";
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const n = document.createElement("span");
+        n.className = "name";
+        n.textContent = o.name;
+        const pr = document.createElement("span");
+        pr.className = "price";
+        pr.textContent = money(o.price) + " · " + term(o.duration);
+        row.append(n, pr);
+
+        if (o.status && o.status !== "active") {
+          const t = document.createElement("span");
+          t.className = "tag";
+          t.textContent = o.status;
+          row.append(t);
+        }
+        d.append(row);
+
+        if (o.highlights?.length) {
+          const ul = document.createElement("ul");
+          for (const hl of o.highlights) {
+            const li = document.createElement("li");
+            li.textContent = hl;
+            ul.append(li);
+          }
+          d.append(ul);
+        }
+
+        const meta = document.createElement("p");
+        meta.className = "meta";
+        meta.textContent = o.sku + " · " + o.seat_model.replace(/-/g, " ");
+        d.append(meta);
+
+        // Only an active offer with an open self-service or manual channel can
+        // actually be requested today.
+        if (o.status === "active" && o.price.amount === 0) {
+          const a = document.createElement("a");
+          a.href = "/licence/?sku=" + encodeURIComponent(o.sku);
+          a.textContent = "Request a key →";
+          d.append(a);
+        }
+        art.append(d);
+      }
+      out.append(art);
+    }
+  })
+  .catch(e => {
+    const out = document.getElementById("out");
+    out.className = "error";
+    out.textContent = "Could not load the catalog: " + e.message;
+  });
+</script>
+</body>
+</html>

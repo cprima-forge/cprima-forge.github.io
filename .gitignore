@@ -1,0 +1,20 @@
+# This repository is PUBLIC and every committed byte is served and clonable.
+# Two consequences drive everything below.
+
+# Virtualenvs. tools/*/ each carry one; committing them would publish thousands
+# of files and platform-specific binaries into a website.
+.venv/
+__pycache__/
+*.pyc
+
+# Font Awesome and Web Awesome Pro assets must never be committed here.
+# Committing them redistributes paid, licence-restricted files to anyone who
+# clones this repo. The kits are loaded from their CDN instead, with a kit code
+# that is domain-locked to forge.cprima.net and therefore safe in public HTML.
+# The npm auth token that fetches them is a credential and belongs nowhere.
+.npmrc
+fontawesome-pro/
+webawesome-pro/
+
+# Local preview
+.DS_Store

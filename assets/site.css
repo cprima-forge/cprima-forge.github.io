@@ -1,0 +1,138 @@
+/* cprima-forge visual identity.
+ *
+ * Solarized Light, and an orange rectangle across the top. Both are fixed
+ * points, not defaults to be tuned per page: the bar is the mark people
+ * recognise before they read anything, so it is the same height, the same
+ * colour and in the same place on every page.
+ *
+ * Solarized is a measured palette — its greys are chosen so that background
+ * and foreground hold a constant perceptual relationship. Substituting a
+ * "close enough" hex breaks that, so every colour below is the published
+ * value and none is invented.
+ *
+ * Light only. Solarized Dark is the natural counterpart and is deliberately
+ * NOT wired to prefers-color-scheme here: the identity is the light one, and a
+ * visitor whose OS is in dark mode should still recognise the site.
+ */
+
+:root {
+  /* Solarized, canonical values */
+  --base3:  #fdf6e3;  /* background */
+  --base2:  #eee8d5;  /* background highlight, rules */
+  --base1:  #93a1a1;  /* comments, de-emphasised */
+  --base00: #657b83;  /* body text */
+  --base01: #586e75;  /* emphasised text, headings */
+  --base02: #073642;
+  --orange: #cb4b16;  /* the mark */
+  --blue:   #268bd2;  /* links */
+  --green:  #859900;
+  --red:    #dc322f;
+
+  --bar-height: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  /* Room for the bar, which is fixed so it survives scrolling — a mark that
+     scrolls away stops being a mark. */
+  padding: calc(var(--bar-height) + 2.5rem) 1.25rem 4rem;
+  background: var(--base3);
+  color: var(--base00);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--bar-height);
+  background: var(--orange);
+  z-index: 10;
+}
+
+main { max-width: 46rem; margin: 0 auto; }
+
+h1, h2, h3 { color: var(--base01); line-height: 1.25; }
+h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+h2 { font-size: 1.15rem; margin: 0 0 .35rem; }
+
+a { color: var(--blue); }
+a:hover { color: var(--orange); }
+
+.muted { color: var(--base1); }
+
+.card {
+  border: 1px solid var(--base2);
+  border-radius: 6px;
+  background: #fffdf6;      /* a shade above base3, so cards lift off the page */
+  padding: 1.25rem;
+  margin: 0 0 1.25rem;
+}
+
+.rule { border: 0; border-top: 1px solid var(--base2); margin: .9rem 0; }
+
+/* Offers stack inside a product card, separated rather than boxed again —
+   nesting a border inside a border reads as two unrelated things. */
+.offer { border-top: 1px solid var(--base2); padding-top: .9rem; margin-top: .9rem; }
+.offer:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+
+.row { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.name { font-weight: 600; color: var(--base01); }
+.price { font-variant-numeric: tabular-nums; }
+
+.tag {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border: 1px solid var(--base2);
+  border-radius: 99px;
+  padding: .1rem .5rem;
+  color: var(--base1);
+}
+
+ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+li { margin: .15rem 0; }
+
+.meta { color: var(--base1); font-size: .85rem; margin-top: .5rem; }
+
+.error {
+  border: 1px solid var(--red);
+  border-left-width: 3px;
+  border-radius: 6px;
+  padding: 1rem;
+  color: var(--red);
+}
+
+label { display: block; font-weight: 600; color: var(--base01); margin: 0 0 .3rem; }
+
+input, select, button {
+  font: inherit;
+  border-radius: 4px;
+  border: 1px solid var(--base2);
+  padding: .5rem .6rem;
+  background: #fffdf6;
+  color: var(--base00);
+}
+
+input:focus, select:focus, button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 1px;
+}
+
+button {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--base3);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:disabled { opacity: .55; cursor: not-allowed; }
+
+code, pre, .key {
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+}

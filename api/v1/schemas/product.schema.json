@@ -18,6 +18,13 @@
       "type": "boolean",
       "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licensed product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicensed product is skipped by the licensing reconciler rather than silently ignored."
     },
+    "policies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+      "description": "The licensing tiers ASSIGNED to this product, by template name. This is the complete set, not a subtraction from a default: a licensed product has exactly these policies and no others, and one with an empty or absent list has none. Nothing is granted implicitly.\n\nThese are OUR names, defined in the licensing repository's policy templates — never a provider's UUID and never a provider's attributes, so no vendor identity enters the catalog. A provider swap replaces what the names mean and leaves this list untouched.\n\nAssigning a tier to a product is therefore a data edit, and so is withdrawing one.",
+      "examples": [["free", "plus"], ["pre-v0.5"]]
+    },
     "artefacts": {
       "type": "array",
       "minItems": 1,
@@ -71,8 +78,13 @@
       "properties": {
         "sku": {
           "type": "string",
+          "pattern": "^[A-HJKMNP-TV-Z][0-9A-HJKMNP-TV-Z]{7}$",
+          "description": "Permanent, opaque, checksum-protected. Eight uppercase characters from the Crockford Base32 alphabet (no I, L, O or U), first a letter, last an ISO 7064 MOD 37-2 check character. See docs/sku-format.md; allocate with tools/sku.py.\n\nThis pattern is LEXICAL only — the checksum is verified by tools/validate.py, because a regex cannot compute one.\n\nOpaque on purpose: a readable id asserts facts it cannot retract. `workflow-lens-free` claimed a product, a tier and a price, all of which are stated separately in fields that may change, and it invited derivation — a function once manufactured `cpmforge-license-spike-trial` from a display name, producing an identifier that looked plausible and joined to nothing. Changing a SKU orphans every order that referenced it; retire it and add a new one."
+        },
+        "slug": {
+          "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
-          "description": "Permanent. Changing a SKU orphans every order that referenced it; retire it and add a new one instead."
+          "description": "Human-readable identity for logs, URLs and operators. Free to change, unlike the SKU — which is the entire point of separating them. Never used as a join."
         },
         "name": { "type": "string" },
         "price": {

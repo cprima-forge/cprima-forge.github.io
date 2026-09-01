@@ -42,6 +42,212 @@
   ],
   "products": [
     {
+      "product": "cpmf-uipsl-browser",
+      "name": "CPMForge Browser",
+      "summary": "Browser automation activities for robotic process automation workflows, covering the interactions a process needs rather than the whole surface of a browser driver.\n",
+      "artefacts": [
+        {
+          "id": "CPMForge.Browser.Plus",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "plus"
+        }
+      ],
+      "licensed": true,
+      "policies": [
+        "open"
+      ],
+      "offers": [
+        {
+          "artefacts": [
+            "CPMForge.Browser.Plus"
+          ],
+          "slug": "cpmf-uipsl-browser-open",
+          "sku": "JXQPCBJ4",
+          "name": "Open",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "status": "active",
+          "highlights": [
+            "Browser interaction activities"
+          ],
+          "duration": "annual",
+          "seat_model": "per-machine",
+          "seats": 3,
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ]
+        }
+      ]
+    },
+    {
+      "product": "cpmf-uipsl-config",
+      "name": "CPMForge Config",
+      "summary": "Configuration handling for robotic process automation workflows — typed lookup, environment overlays, and validation at load rather than at first use.\n",
+      "artefacts": [
+        {
+          "id": "CPMForge.Config.Plus",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "plus"
+        },
+        {
+          "id": "CPMForge.Config.WorkflowAnalyzerRules",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download"
+        }
+      ],
+      "licensed": true,
+      "policies": [
+        "free"
+      ],
+      "offers": [
+        {
+          "artefacts": [
+            "CPMForge.Config.Plus",
+            "CPMForge.Config.WorkflowAnalyzerRules"
+          ],
+          "slug": "cpmf-uipsl-config-free",
+          "sku": "V668FCHB",
+          "name": "Free",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "status": "active",
+          "highlights": [
+            "Typed configuration lookup",
+            "Environment overlays",
+            "Workflow Analyzer rules included"
+          ],
+          "duration": "30d",
+          "seat_model": "unlimited-machines",
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ]
+        }
+      ]
+    },
+    {
+      "product": "cpmf-uipsl-logging",
+      "name": "CPMForge Logging",
+      "summary": "Structured, level-aware logging activities for robotic process automation workflows, with consistent field names across a process and its invoked children.\n",
+      "artefacts": [
+        {
+          "id": "CPMForge.Logging.Open",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "open"
+        },
+        {
+          "id": "CPMForge.Logging.Plus",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "plus"
+        }
+      ],
+      "licensed": true,
+      "policies": [
+        "free"
+      ],
+      "offers": [
+        {
+          "artefacts": [
+            "CPMForge.Logging.Open"
+          ],
+          "slug": "cpmf-uipsl-logging-free",
+          "sku": "EY9C6CRS",
+          "name": "Free",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "status": "active",
+          "highlights": [
+            "Level-aware logging activities",
+            "Consistent fields across invoked workflows"
+          ],
+          "duration": "30d",
+          "seat_model": "unlimited-machines",
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ]
+        }
+      ]
+    },
+    {
+      "product": "cpmf-uipsl-utils",
+      "name": "CPMForge Utils",
+      "summary": "General-purpose activities for robotic process automation workflows — string, collection and date handling that would otherwise be re-implemented in every process.\n",
+      "artefacts": [
+        {
+          "id": "CPMForge.Utils.Open",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "open"
+        },
+        {
+          "id": "CPMForge.Utils.Plus",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download",
+          "edition": "plus"
+        },
+        {
+          "id": "CPMForge.Utils.WorkflowAnalyzerRules",
+          "kind": "software",
+          "format": "nupkg",
+          "fulfillment": "download"
+        }
+      ],
+      "licensed": true,
+      "policies": [
+        "open"
+      ],
+      "offers": [
+        {
+          "artefacts": [
+            "CPMForge.Utils.Open",
+            "CPMForge.Utils.WorkflowAnalyzerRules"
+          ],
+          "slug": "cpmf-uipsl-utils-open",
+          "sku": "XS5M1WBC",
+          "name": "Open",
+          "price": {
+            "amount": 0,
+            "currency": "EUR"
+          },
+          "status": "active",
+          "highlights": [
+            "String, collection and date activities",
+            "Workflow Analyzer rules included"
+          ],
+          "duration": "annual",
+          "seat_model": "per-machine",
+          "seats": 3,
+          "grants": [
+            "use",
+            "use-commercial",
+            "updates"
+          ]
+        }
+      ]
+    },
+    {
       "product": "m365",
       "name": "M365",
       "summary": "Microsoft 365 automation for RPA workflows: mail, folders, attachments, Graph-backed.\n",
@@ -66,7 +272,8 @@
           "artefacts": [
             "CPMForge.M365.Open"
           ],
-          "sku": "m365-open",
+          "slug": "m365-open",
+          "sku": "QRBB7A83",
           "name": "M365 Open",
           "price": {
             "amount": 0,
@@ -85,7 +292,8 @@
             "CPMForge.M365.Open",
             "CPMForge.M365.Plus"
           ],
-          "sku": "m365-plus-annual",
+          "slug": "m365-plus-annual",
+          "sku": "HC6J4X5D",
           "name": "M365 Plus",
           "price": {
             "status": "undecided",
@@ -119,9 +327,13 @@
         }
       ],
       "licensed": true,
+      "policies": [
+        "free"
+      ],
       "offers": [
         {
-          "sku": "workflow-lens-free",
+          "slug": "workflow-lens-free",
+          "sku": "P4DF2Y7F",
           "name": "Workflow Lens",
           "price": {
             "amount": 0,

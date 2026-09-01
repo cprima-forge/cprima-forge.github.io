@@ -102,6 +102,7 @@
           "kind": "vsix"
         }
       ],
+      "licensed": true,
       "offers": [
         {
           "sku": "workflow-lens-free",

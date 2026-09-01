@@ -20,13 +20,24 @@
 // The page renders data it fetches; it never hardcodes a product, a price or a
 // tier. Adding an offer is a catalog edit and a rebuild, never an HTML edit —
 // which is the whole reason the catalog is the source of truth.
-const money = p =>
-  p.amount === 0 ? "Free"
-  : p.amount == null ? "Price on request"
-  : new Intl.NumberFormat(undefined, { style: "currency", currency: p.currency }).format(p.amount);
+// A price is either decided — including decided as zero — or explicitly not
+// decided. These must never render alike: a placeholder zero once made "not yet
+// priced" indistinguishable from "free" in the contract itself.
+const money = p => {
+  if (typeof p.amount === "number") {
+    return p.amount === 0
+      ? "Free"
+      : new Intl.NumberFormat(undefined, { style: "currency", currency: p.currency }).format(p.amount);
+  }
+  if (p.status === "on-request") return "Price on request";   // decided: negotiated
+  if (p.status === "undecided") return "Not yet priced";      // not decided at all
+  return "—";
+};
 
+// `duration` is a licensing term and optional: a printed book has none. An
+// offer without one gets no term text rather than a fabricated default.
 const DURATION = { perpetual: "one-off", annual: "per year", monthly: "per month" };
-const term = d => DURATION[d] ?? `every ${d.replace(/d$/, " days")}`;
+const term = d => (!d ? null : DURATION[d] ?? `every ${d.replace(/d$/, " days")}`);
 
 fetch("/api/v1/catalog.json")
   .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
@@ -56,14 +67,15 @@ fetch("/api/v1/catalog.json")
         n.textContent = o.name;
         const pr = document.createElement("span");
         pr.className = "price";
-        pr.textContent = money(o.price) + " · " + term(o.duration);
+        const t = term(o.duration);
+        pr.textContent = money(o.price) + (t ? " · " + t : "");
         row.append(n, pr);
 
         if (o.status && o.status !== "active") {
-          const t = document.createElement("span");
-          t.className = "tag";
-          t.textContent = o.status;
-          row.append(t);
+          const tag = document.createElement("span");
+          tag.className = "tag";
+          tag.textContent = o.status;
+          row.append(tag);
         }
         d.append(row);
 
@@ -79,12 +91,12 @@ fetch("/api/v1/catalog.json")
 
         const meta = document.createElement("p");
         meta.className = "meta";
-        meta.textContent = o.sku + " · " + o.seat_model.replace(/-/g, " ");
+        meta.textContent = [o.slug ?? o.sku, o.seat_model?.replace(/-/g, " ")].filter(Boolean).join(" · ");
         d.append(meta);
 
         // Only an active offer with an open self-service or manual channel can
         // actually be requested today.
-        if (o.status === "active" && o.price.amount === 0) {
+        if (o.status === "active" && o.price.amount === 0) {   // amount, never status
           const a = document.createElement("a");
           a.href = "/licence/?sku=" + encodeURIComponent(o.sku);
           a.textContent = "Request a key →";

@@ -77,13 +77,26 @@
         "name": { "type": "string" },
         "price": {
           "type": "object",
-          "required": ["amount", "currency"],
+          "required": ["currency"],
           "additionalProperties": false,
-          "description": "Always stated, including zero. An absent price and a free price must never look the same.",
+          "description": "Exactly one of `amount` or `status`. A price is either decided — including decided as zero — or explicitly not decided. It is never both and never neither.\n\nThis exists because a placeholder `amount: 0` is a lie the contract cannot distinguish from genuine free: Workflow Lens at zero really is free, M365 Plus at zero was a stand-in for an undecided price, and a consumer reading catalog.json saw the same thing. The whole point of always stating a price was that absent and free must not look alike; a placeholder zero reintroduced exactly that collision one level down.",
           "properties": {
-            "amount": { "type": "number", "minimum": 0 },
+            "amount": {
+              "type": "number",
+              "minimum": 0,
+              "description": "A decided price. Zero means genuinely free."
+            },
+            "status": {
+              "type": "string",
+              "enum": ["undecided", "on-request"],
+              "description": "`undecided` — not yet priced, and must not be sold. `on-request` — deliberately negotiated per customer, as a site licence is; that is a decided commercial position, not a gap."
+            },
             "currency": { "type": "string", "enum": ["EUR", "USD"] }
-          }
+          },
+          "oneOf": [
+            { "required": ["amount"], "not": { "required": ["status"] } },
+            { "required": ["status"], "not": { "required": ["amount"] } }
+          ]
         },
         "duration": {
           "type": "string",

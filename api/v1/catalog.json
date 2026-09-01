@@ -88,7 +88,7 @@
           "sku": "m365-plus-annual",
           "name": "M365 Plus",
           "price": {
-            "amount": 0,
+            "status": "undecided",
             "currency": "EUR"
           },
           "duration": "annual",

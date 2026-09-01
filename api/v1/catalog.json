@@ -248,70 +248,6 @@
       ]
     },
     {
-      "product": "m365",
-      "name": "M365",
-      "summary": "Microsoft 365 automation for RPA workflows: mail, folders, attachments, Graph-backed.\n",
-      "artefacts": [
-        {
-          "id": "CPMForge.M365.Open",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "open"
-        },
-        {
-          "id": "CPMForge.M365.Plus",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "plus"
-        }
-      ],
-      "offers": [
-        {
-          "artefacts": [
-            "CPMForge.M365.Open"
-          ],
-          "slug": "m365-open",
-          "sku": "QRBB7A83",
-          "name": "M365 Open",
-          "price": {
-            "amount": 0,
-            "currency": "EUR"
-          },
-          "duration": "perpetual",
-          "seat_model": "single-user",
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ]
-        },
-        {
-          "artefacts": [
-            "CPMForge.M365.Open",
-            "CPMForge.M365.Plus"
-          ],
-          "slug": "m365-plus-annual",
-          "sku": "HC6J4X5D",
-          "name": "M365 Plus",
-          "price": {
-            "status": "undecided",
-            "currency": "EUR"
-          },
-          "duration": "annual",
-          "seat_model": "per-machine",
-          "seats": 1,
-          "grants": [
-            "use",
-            "use-commercial",
-            "support",
-            "updates"
-          ]
-        }
-      ]
-    },
-    {
       "product": "workflow-lens",
       "name": "Workflow Lens",
       "summary": "Read a whole RPA process rather than one file at a time: invoked workflows grafted into one model, with contract checking and un-composition.\n",
@@ -332,6 +268,9 @@
       ],
       "offers": [
         {
+          "artefacts": [
+            "cpmforge.cpmf-workflow-lens"
+          ],
           "slug": "workflow-lens-free",
           "sku": "P4DF2Y7F",
           "name": "Workflow Lens",

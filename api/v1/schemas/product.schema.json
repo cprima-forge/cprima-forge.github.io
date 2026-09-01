@@ -165,7 +165,7 @@
         "artefacts": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Which of the product's artefacts this offer covers. Omit to mean all of them. Validated against the product's own artefact ids."
+          "description": "Which of the product's artefacts this offer delivers, by their ids. REQUIRED whenever the product has any — validate.py enforces that, because a regex cannot see the product from inside an offer.\n\nIt used to mean 'omit for all of them', which was harmless while a product had one artefact and silently wrong once it had two. It also shipped: the Workflow Lens offer published no artefacts, so nothing could answer what its SKU delivered. Never infer; say which."
         },
         "note": { "type": "string" }
       }

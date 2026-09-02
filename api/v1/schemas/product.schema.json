@@ -16,7 +16,7 @@
     "summary": { "type": "string", "description": "One or two sentences. What it does, not how." },
     "licensed": {
       "type": "boolean",
-      "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licenced product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicenced product is skipped by the licencing reconciler rather than silently ignored. THE FIELD NAME KEEPS THE AMERICAN SPELLING and must not be 'corrected' to licenced: it is a wire value in the published /api/v1/catalog.json contract, which keygen_sync.py reads to decide what to reconcile. A repository-wide rename did change it once, and every product then read as unlicensed — all ten managed objects reported as drift, from a change that looked like a spelling fix."
+      "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licenced product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicenced product is skipped by the licencing reconciler rather than silently ignored. THE FIELD NAME KEEPS THE AMERICAN SPELLING and must not be 'corrected' to licenced: it is a wire value in the published /api/v1/catalog.json contract, which keygen_sync.py reads to decide what to reconcile. A repository-wide rename did change it once, and every product then read as NOT licensed — all ten managed objects reported as drift, from a change that looked like a spelling fix."
     },
     "policies": {
       "type": "array",
@@ -74,7 +74,7 @@
       "type": "object",
       "required": ["sku", "name", "price"],
       "additionalProperties": false,
-      "description": "One way to obtain one product. The SKU is what an order references and what a downstream capability maps to, so it is permanent once used.\n\nThe required core is deliberately tiny: an identity, a label, a price. `duration`, `renewal`, `seat_model`, `seats`, `eligible_for` and `grants` are LICENSING terms and are optional — requiring them forced every offer to be shaped like a software licence, so a paperback had to invent a seat model and a duration in order to exist at all. An offer is a way to obtain something; it is not necessarily a way to licence something.",
+      "description": "One way to obtain one product. The SKU is what an order references and what a downstream capability maps to, so it is permanent once used.\n\nThe required core is deliberately tiny: an identity, a label, a price. `duration`, `renewal`, `seat_model`, `seats`, `eligible_for` and `grants` are LICENCING terms and are optional — requiring them forced every offer to be shaped like a software licence, so a paperback had to invent a seat model and a duration in order to exist at all. An offer is a way to obtain something; it is not necessarily a way to licence something.",
       "properties": {
         "sku": {
           "type": "string",

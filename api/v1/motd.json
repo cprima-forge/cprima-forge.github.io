@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-09-02T20:45:00Z",
+  "_comment": "Message of the day for CPMForge extensions. Fetched by @cpmf/motd. Targeting is applied CLIENT-SIDE: this document is identical for every reader, so the server never learns which product, tier or user asked. Shape and rules: packages/motd/docs/published-shape.md in cpmf-uips-vscode.",
+  "messages": [
+    {
+      "id": "2026-09-motd-selftest",
+      "severity": "info",
+      "title": "CPMForge message channel is live",
+      "body": "This is a test message confirming the message-of-the-day channel works end to end. It is scheduled to disappear on its own.",
+      "url": "https://forge.cprima.net/products/",
+      "urlLabel": "CPMForge products",
+      "from": "2026-09-02T00:00:00Z",
+      "thru": "2026-12-31T23:59:59Z",
+      "target": {
+        "products": ["*"]
+      },
+      "dismissible": true
+    },
+    {
+      "id": "2026-09-uipsor-lens-targeting-selftest",
+      "severity": "info",
+      "title": "Object Repository lens: statistics and export",
+      "body": "Repository statistics are available in the panel, and \"Object Repository: Export Statistics\" writes a Markdown report.\n\nThis message is targeted at one product and one version range, so seeing it anywhere else means targeting is broken.",
+      "from": "2026-09-02T00:00:00Z",
+      "thru": "2026-12-31T23:59:59Z",
+      "target": {
+        "products": ["cpmf-uipsor-lens"],
+        "minVersion": "0.1.7"
+      }
+    },
+    {
+      "id": "2026-09-expired-selftest",
+      "severity": "warning",
+      "title": "This message should NEVER be displayed",
+      "body": "Its thru date is in the past. If this ever appears, the time-window filter is not working.",
+      "from": "2020-01-01T00:00:00Z",
+      "thru": "2020-01-02T00:00:00Z"
+    },
+    {
+      "id": "2026-09-future-selftest",
+      "severity": "warning",
+      "title": "This message should NEVER be displayed either",
+      "body": "Its from date is far in the future. If this appears, the time-window filter is not working.",
+      "from": "2099-01-01T00:00:00Z",
+      "thru": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "2026-09-tier-selftest",
+      "severity": "info",
+      "title": "Tier-targeted test message",
+      "body": "Aimed at the creator tier only. A build that does not know its tier must NOT show this — an unknown value never matches a restricted facet.",
+      "from": "2026-09-02T00:00:00Z",
+      "thru": "2026-12-31T23:59:59Z",
+      "target": {
+        "tiers": ["creator"]
+      }
+    }
+  ]
+}

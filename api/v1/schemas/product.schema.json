@@ -16,13 +16,13 @@
     "summary": { "type": "string", "description": "One or two sentences. What it does, not how." },
     "licensed": {
       "type": "boolean",
-      "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licensed product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicensed product is skipped by the licensing reconciler rather than silently ignored."
+      "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licenced product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicenced product is skipped by the licencing reconciler rather than silently ignored. THE FIELD NAME KEEPS THE AMERICAN SPELLING and must not be 'corrected' to licenced: it is a wire value in the published /api/v1/catalog.json contract, which keygen_sync.py reads to decide what to reconcile. A repository-wide rename did change it once, and every product then read as unlicensed — all ten managed objects reported as drift, from a change that looked like a spelling fix."
     },
     "policies": {
       "type": "array",
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
-      "description": "The licensing tiers ASSIGNED to this product, by template name. This is the complete set, not a subtraction from a default: a licensed product has exactly these policies and no others, and one with an empty or absent list has none. Nothing is granted implicitly.\n\nThese are OUR names, defined in the licensing repository's policy templates — never a provider's UUID and never a provider's attributes, so no vendor identity enters the catalog. A provider swap replaces what the names mean and leaves this list untouched.\n\nAssigning a tier to a product is therefore a data edit, and so is withdrawing one.",
+      "description": "The licencing tiers ASSIGNED to this product, by template name. This is the complete set, not a subtraction from a default: a licenced product has exactly these policies and no others, and one with an empty or absent list has none. Nothing is granted implicitly.\n\nThese are OUR names, defined in the licencing repository's policy templates — never a provider's UUID and never a provider's attributes, so no vendor identity enters the catalog. A provider swap replaces what the names mean and leaves this list untouched.\n\nAssigning a tier to a product is therefore a data edit, and so is withdrawing one.",
       "examples": [["free", "plus"], ["pre-v0.5"]]
     },
     "artefacts": {
@@ -74,12 +74,12 @@
       "type": "object",
       "required": ["sku", "name", "price"],
       "additionalProperties": false,
-      "description": "One way to obtain one product. The SKU is what an order references and what a downstream capability maps to, so it is permanent once used.\n\nThe required core is deliberately tiny: an identity, a label, a price. `duration`, `renewal`, `seat_model`, `seats`, `eligible_for` and `grants` are LICENSING terms and are optional — requiring them forced every offer to be shaped like a software licence, so a paperback had to invent a seat model and a duration in order to exist at all. An offer is a way to obtain something; it is not necessarily a way to license something.",
+      "description": "One way to obtain one product. The SKU is what an order references and what a downstream capability maps to, so it is permanent once used.\n\nThe required core is deliberately tiny: an identity, a label, a price. `duration`, `renewal`, `seat_model`, `seats`, `eligible_for` and `grants` are LICENSING terms and are optional — requiring them forced every offer to be shaped like a software licence, so a paperback had to invent a seat model and a duration in order to exist at all. An offer is a way to obtain something; it is not necessarily a way to licence something.",
       "properties": {
         "sku": {
           "type": "string",
           "pattern": "^[A-HJKMNP-TV-Z][0-9A-HJKMNP-TV-Z]{7}$",
-          "description": "Permanent, opaque, checksum-protected. Eight uppercase characters from the Crockford Base32 alphabet (no I, L, O or U), first a letter, last an ISO 7064 MOD 37-2 check character. See docs/sku-format.md; allocate with tools/sku.py.\n\nThis pattern is LEXICAL only — the checksum is verified by tools/validate.py, because a regex cannot compute one.\n\nOpaque on purpose: a readable id asserts facts it cannot retract. `workflow-lens-free` claimed a product, a tier and a price, all of which are stated separately in fields that may change, and it invited derivation — a function once manufactured `cpmforge-license-spike-trial` from a display name, producing an identifier that looked plausible and joined to nothing. Changing a SKU orphans every order that referenced it; retire it and add a new one."
+          "description": "Permanent, opaque, checksum-protected. Eight uppercase characters from the Crockford Base32 alphabet (no I, L, O or U), first a letter, last an ISO 7064 MOD 37-2 check character. See docs/sku-format.md; allocate with tools/sku.py.\n\nThis pattern is LEXICAL only — the checksum is verified by tools/validate.py, because a regex cannot compute one.\n\nOpaque on purpose: a readable id asserts facts it cannot retract. `workflow-lens-free` claimed a product, a tier and a price, all of which are stated separately in fields that may change, and it invited derivation — a function once manufactured `cpmforge-licence-spike-trial` from a display name, producing an identifier that looked plausible and joined to nothing. Changing a SKU orphans every order that referenced it; retire it and add a new one."
         },
         "slug": {
           "type": "string",
@@ -116,7 +116,7 @@
             { "enum": ["perpetual", "annual", "monthly"] },
             { "pattern": "^[1-9][0-9]*d$", "description": "An explicit number of days, e.g. 30d." }
           ],
-          "description": "A licensing period is not always a calendar one: the free tier lapses every 30 days, which is neither monthly nor annual, and the enforcement layer counts seconds. Named durations stay for the common cases."
+          "description": "A licencing period is not always a calendar one: the free tier lapses every 30 days, which is neither monthly nor annual, and the enforcement layer counts seconds. Named durations stay for the common cases."
         },
         "renewal": {
           "type": "string",

@@ -18,41 +18,36 @@
 </head>
 <body>
 <main>
-  <h1><i class="fa-solid fa-key"></i> Request a licence key</h1>
-  <p class="muted">Free offers only. The key is sent to the address you give.</p>
-
-  <article class="card">
-    <form id="f">
-      <div class="field">
-        <label for="sku">Product</label>
-        <select id="sku" name="sku" required>
-          <option value="">Loading…</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required autocomplete="email"
-               placeholder="you@example.com">
-        <span class="hint">
-          The key is emailed here, and the licence is issued to this address.
-          It is the only way to get the key back later.
-        </span>
-      </div>
-
-      <div>
-        <button type="submit" id="go">
-          <i class="fa-solid fa-paper-plane"></i> Send me a key
-        </button>
-      </div>
-    </form>
-    <div id="msg" hidden></div>
-  </article>
-
-  <p class="meta"><a href="/products/">← All products</a></p>
+  <h1>Licence</h1>
+  <p class="muted">This page intentionally left blank.</p>
 </main>
 
-<script>
+<!--
+  THE REQUEST FORM IS DISABLED, DELIBERATELY AND TEMPORARILY.
+
+  The markup and script below are unchanged and inert. `type="text/plain"` stops
+  the browser executing the script, which preserves the source exactly instead of
+  wrapping it in an HTML comment and hoping no `--` inside the JavaScript ends the
+  comment early. Restore by putting the form back and changing the type to
+  `module`.
+
+  Withdrawing the form is presentation only, and that is the whole intent. The
+  worry is not an attacker; it is a curious user following the homepage link in
+  the extension's marketplace listing and poking around a commerce flow that is
+  half-built. Removing the invitation removes that.
+
+  POST /free-key REMAINS OPEN AND IS MEANT TO. It still issues and still mails,
+  and a key can still be requested by anyone who calls it directly — the CORS
+  rule on it is browser-enforced and, as entry.py says outright, "not a security
+  boundary". Nothing here should be read as closing it.
+
+  If it ever does need closing, the lever is the self-service sales channel in
+  skus.yaml, not this page: free_key.py treats a SKU without an open channel as
+  unrequestable and answers 404, the same answer it gives for a SKU that does not
+  exist. That was considered and deliberately not done.
+-->
+
+<script type="text/plain" data-disabled="licence-request">
 // Where the secrets live. This page holds none: minting a licence needs a
 // Keygen admin token and sending mail needs a provider token, and anything in
 // a static page is public. So the page collects input and the worker does the

@@ -13,10 +13,28 @@
 <body>
 <main>
   <h1>Products</h1>
-  <p class="muted">Generated from the catalog. <a href="/api/v1/catalog.json">catalog.json</a></p>
-  <div id="out">Loading…</div>
+  <p class="muted">This page intentionally left blank.</p>
 </main>
-<script>
+
+<!--
+  CATALOG RENDERING IS DISABLED, DELIBERATELY AND TEMPORARILY.
+
+  The script below is unchanged and inert: `type="text/plain"` stops the browser
+  executing it, which preserves the source exactly rather than commenting it out
+  and hoping no `--` inside the JavaScript breaks the comment. Restore it by
+  changing the type back to `module`, and put back the heading paragraph above.
+
+  Why: no HTML presentation of the catalog while nobody is watching the service.
+  Prices, tiers and product names are commercial statements, and a stale or
+  half-migrated one making claims unattended is worse than a page that says
+  nothing.
+
+  /api/v1/catalog.json IS STILL SERVED, on purpose. It is the published contract
+  that keygen_sync.py reads to reconcile Keygen, so removing it would break the
+  tooling rather than protect anything — and it is inert data that no stranger
+  can act on. Only the human-facing presentation is withdrawn.
+-->
+<script type="text/plain" data-disabled="catalog-render">
 // The page renders data it fetches; it never hardcodes a product, a price or a
 // tier. Adding an offer is a catalog edit and a rebuild, never an HTML edit —
 // which is the whole reason the catalog is the source of truth.

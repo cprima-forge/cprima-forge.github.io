@@ -25,21 +25,39 @@
   <h1>cprima-forge</h1>
   <p class="muted">Tooling for robotic process automation development.</p>
 
-  <article class="card">
-    <h2><i class="fa-solid fa-box-open"></i> Products</h2>
-    <p class="muted">What is on offer, generated from the catalog.</p>
-    <p><a href="/products/">Browse products →</a></p>
-  </article>
+  <p class="muted">This page intentionally left blank.</p>
 
-  <article class="card">
-    <h2><i class="fa-solid fa-key"></i> Licence</h2>
-    <p class="muted">Request a key, or check one you already have.</p>
-    <p><a href="/licence/">Licence →</a></p>
-  </article>
+  <!--
+    THE PRODUCT AND LICENCE CARDS ARE WITHDRAWN, DELIBERATELY AND TEMPORARILY.
+
+    This page is the `homepage` in the published extension's marketplace
+    listing, so it is where a curious user arrives — not /products/. Leaving
+    "Browse products →" and "Licence →" here would invite exactly the poking
+    around the withdrawal is meant to prevent, and would land them on two pages
+    that now say nothing.
+
+    The catalog.json link goes too. The file is STILL SERVED, because
+    keygen_sync.py reads it as the published contract and removing it breaks the
+    tooling rather than protecting anything — but there is no reason to point a
+    person at it.
+
+    Restore all three when the service is attended again.
+
+    <article class="card">
+      <h2>Products</h2>
+      <p class="muted">What is on offer, generated from the catalog.</p>
+      <p><a href="/products/">Browse products</a></p>
+    </article>
+
+    <article class="card">
+      <h2>Licence</h2>
+      <p class="muted">Request a key, or check one you already have.</p>
+      <p><a href="/licence/">Licence</a></p>
+    </article>
+  -->
 
   <p class="meta">
     <a href="https://github.com/cprima-forge">github.com/cprima-forge</a>
-    · <a href="/api/v1/catalog.json">catalog.json</a>
   </p>
 </main>
 </body>

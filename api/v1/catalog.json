@@ -80,7 +80,12 @@
           "requires": {
             "operation": "offline-after-first-run",
             "verification": "provider-response"
-          }
+          },
+          "channels": [
+            {
+              "channel": "manual"
+            }
+          ]
         },
         {
           "artefacts": [
@@ -105,7 +110,15 @@
             "operation": "offline-after-first-run",
             "verification": "provider-response",
             "version_ceiling": "<0.5"
-          }
+          },
+          "channels": [
+            {
+              "channel": "manual"
+            },
+            {
+              "channel": "self-service"
+            }
+          ]
         }
       ]
     },
@@ -153,7 +166,12 @@
           "requires": {
             "operation": "offline-after-first-run",
             "verification": "provider-response"
-          }
+          },
+          "channels": [
+            {
+              "channel": "manual"
+            }
+          ]
         },
         {
           "artefacts": [
@@ -184,7 +202,15 @@
             "operation": "offline-after-first-run",
             "verification": "provider-response",
             "version_ceiling": "<0.5"
-          }
+          },
+          "channels": [
+            {
+              "channel": "manual"
+            },
+            {
+              "channel": "self-service"
+            }
+          ]
         }
       ]
     }

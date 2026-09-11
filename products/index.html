@@ -71,6 +71,19 @@ fetch("/api/v1/catalog.json")
       art.append(h, s);
 
       for (const o of p.offers) {
+        // SELF-SERVICE OR NOT AT ALL.
+        //
+        // An offer without a self-service channel is granted by hand, against
+        // the authenticated endpoint. The public one refuses it — and refuses
+        // it with the same answer it gives for a SKU that does not exist, so
+        // rendering it here would put a button in front of a visitor that
+        // leads nowhere and explains nothing.
+        //
+        // It stays in catalog.json, which is deliberate: keygen_sync reads the
+        // published contract to decide what it manages, so dropping the offer
+        // there would strand its provider policies. Published, not shown.
+        if (!(o.channels ?? []).some(c => c.channel === "self-service")) continue;
+
         // A planned or retired offer is real catalog data, but showing it as
         // purchasable would be a lie, so it is labelled rather than hidden.
         const d = document.createElement("div");
@@ -120,8 +133,11 @@ fetch("/api/v1/catalog.json")
         }
         art.append(d);
       }
-      out.append(art);
+      // Every offer filtered out — render nothing rather than a bare heading
+      // implying a product with no way to obtain it.
+      if (art.querySelector(".offer")) out.append(art);
     }
+    if (!out.children.length) out.textContent = "Nothing is currently available here.";
   })
   .catch(e => {
     const out = document.getElementById("out");

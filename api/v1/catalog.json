@@ -103,7 +103,8 @@
           ],
           "requires": {
             "operation": "offline-after-first-run",
-            "verification": "provider-response"
+            "verification": "provider-response",
+            "version_ceiling": "<0.5"
           }
         }
       ]
@@ -125,35 +126,6 @@
       ],
       "licensed": true,
       "offers": [
-        {
-          "artefacts": [
-            "cpmforge.cpmf-workflow-lens"
-          ],
-          "slug": "workflow-lens-free",
-          "sku": "P4DF2Y7F",
-          "name": "Workflow Lens",
-          "price": {
-            "amount": 0,
-            "currency": "EUR"
-          },
-          "status": "active",
-          "highlights": [
-            "Transclusion across invoked workflows",
-            "Contract checking at call sites",
-            "Un-composition"
-          ],
-          "duration": "30d",
-          "seat_model": "unlimited-machines",
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ],
-          "requires": {
-            "operation": "offline-after-first-run",
-            "verification": "provider-response"
-          }
-        },
         {
           "artefacts": [
             "cpmforge.cpmf-workflow-lens"
@@ -210,7 +182,8 @@
           ],
           "requires": {
             "operation": "offline-after-first-run",
-            "verification": "provider-response"
+            "verification": "provider-response",
+            "version_ceiling": "<0.5"
           }
         }
       ]

@@ -42,213 +42,73 @@
   ],
   "products": [
     {
-      "product": "cpmf-uipsl-browser",
-      "name": "CPMForge Browser",
-      "summary": "Browser automation activities for robotic process automation workflows, covering the interactions a process needs rather than the whole surface of a browser driver.\n",
+      "product": "cpmf-uipsor-lens",
+      "name": "UiPSOR Lens",
+      "summary": "Read a UiPath Object Repository the way a developer needs it: targets, selectors and their relationships shown as a navigable model rather than a tree of files.\n",
       "artefacts": [
         {
-          "id": "CPMForge.Browser.Plus",
+          "id": "cpmforge.cpmf-uipsor-lens",
           "kind": "software",
-          "format": "nupkg",
+          "format": "vsix",
           "fulfillment": "download",
-          "edition": "plus"
+          "identifiers": {
+            "vscode-marketplace": "cpmforge.cpmf-uipsor-lens"
+          }
         }
-      ],
-      "licensed": true,
-      "policies": [
-        "open"
       ],
       "offers": [
         {
           "artefacts": [
-            "CPMForge.Browser.Plus"
+            "cpmforge.cpmf-uipsor-lens"
           ],
-          "slug": "cpmf-uipsl-browser-open",
-          "sku": "JXQPCBJ4",
-          "name": "Open",
+          "slug": "uipsor-lens-creator",
+          "sku": "BX59546V",
+          "name": "UiPSOR Lens — Creator",
           "price": {
-            "amount": 0,
-            "currency": "EUR"
+            "currency": "EUR",
+            "status": "undecided"
           },
-          "status": "active",
-          "highlights": [
-            "Browser interaction activities"
+          "status": "planned",
+          "duration": "90d",
+          "seat_model": "per-machine",
+          "seats": 1,
+          "grants": [
+            "use",
+            "updates"
           ],
-          "duration": "annual",
+          "requires": {
+            "operation": "offline-after-first-run",
+            "verification": "self-contained"
+          }
+        },
+        {
+          "artefacts": [
+            "cpmforge.cpmf-uipsor-lens"
+          ],
+          "slug": "uipsor-lens-early-adopter",
+          "sku": "BPYX2YH1",
+          "name": "UiPSOR Lens — Early Adopter",
+          "price": {
+            "currency": "EUR",
+            "status": "undecided"
+          },
+          "status": "planned",
+          "duration": "perpetual",
           "seat_model": "per-machine",
           "seats": 3,
           "grants": [
             "use",
-            "use-commercial",
             "updates"
-          ]
+          ],
+          "requires": {
+            "operation": "offline-after-first-run",
+            "verification": "self-contained"
+          }
         }
       ]
     },
     {
-      "product": "cpmf-uipsl-config",
-      "name": "CPMForge Config",
-      "summary": "Configuration handling for robotic process automation workflows — typed lookup, environment overlays, and validation at load rather than at first use.\n",
-      "artefacts": [
-        {
-          "id": "CPMForge.Config.Plus",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "plus"
-        },
-        {
-          "id": "CPMForge.Config.WorkflowAnalyzerRules",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download"
-        }
-      ],
-      "licensed": true,
-      "policies": [
-        "free"
-      ],
-      "offers": [
-        {
-          "artefacts": [
-            "CPMForge.Config.Plus",
-            "CPMForge.Config.WorkflowAnalyzerRules"
-          ],
-          "slug": "cpmf-uipsl-config-free",
-          "sku": "V668FCHB",
-          "name": "Free",
-          "price": {
-            "amount": 0,
-            "currency": "EUR"
-          },
-          "status": "active",
-          "highlights": [
-            "Typed configuration lookup",
-            "Environment overlays",
-            "Workflow Analyzer rules included"
-          ],
-          "duration": "30d",
-          "seat_model": "unlimited-machines",
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ]
-        }
-      ]
-    },
-    {
-      "product": "cpmf-uipsl-logging",
-      "name": "CPMForge Logging",
-      "summary": "Structured, level-aware logging activities for robotic process automation workflows, with consistent field names across a process and its invoked children.\n",
-      "artefacts": [
-        {
-          "id": "CPMForge.Logging.Open",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "open"
-        },
-        {
-          "id": "CPMForge.Logging.Plus",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "plus"
-        }
-      ],
-      "licensed": true,
-      "policies": [
-        "free"
-      ],
-      "offers": [
-        {
-          "artefacts": [
-            "CPMForge.Logging.Open"
-          ],
-          "slug": "cpmf-uipsl-logging-free",
-          "sku": "EY9C6CRS",
-          "name": "Free",
-          "price": {
-            "amount": 0,
-            "currency": "EUR"
-          },
-          "status": "active",
-          "highlights": [
-            "Level-aware logging activities",
-            "Consistent fields across invoked workflows"
-          ],
-          "duration": "30d",
-          "seat_model": "unlimited-machines",
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ]
-        }
-      ]
-    },
-    {
-      "product": "cpmf-uipsl-utils",
-      "name": "CPMForge Utils",
-      "summary": "General-purpose activities for robotic process automation workflows — string, collection and date handling that would otherwise be re-implemented in every process.\n",
-      "artefacts": [
-        {
-          "id": "CPMForge.Utils.Open",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "open"
-        },
-        {
-          "id": "CPMForge.Utils.Plus",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download",
-          "edition": "plus"
-        },
-        {
-          "id": "CPMForge.Utils.WorkflowAnalyzerRules",
-          "kind": "software",
-          "format": "nupkg",
-          "fulfillment": "download"
-        }
-      ],
-      "licensed": true,
-      "policies": [
-        "open"
-      ],
-      "offers": [
-        {
-          "artefacts": [
-            "CPMForge.Utils.Open",
-            "CPMForge.Utils.WorkflowAnalyzerRules"
-          ],
-          "slug": "cpmf-uipsl-utils-open",
-          "sku": "XS5M1WBC",
-          "name": "Open",
-          "price": {
-            "amount": 0,
-            "currency": "EUR"
-          },
-          "status": "active",
-          "highlights": [
-            "String, collection and date activities",
-            "Workflow Analyzer rules included"
-          ],
-          "duration": "annual",
-          "seat_model": "per-machine",
-          "seats": 3,
-          "grants": [
-            "use",
-            "use-commercial",
-            "updates"
-          ]
-        }
-      ]
-    },
-    {
-      "product": "workflow-lens",
+      "product": "cpmf-workflow-lens",
       "name": "Workflow Lens",
       "summary": "Read a whole RPA process rather than one file at a time: invoked workflows grafted into one model, with contract checking and un-composition.\n",
       "artefacts": [
@@ -263,9 +123,6 @@
         }
       ],
       "licensed": true,
-      "policies": [
-        "free"
-      ],
       "offers": [
         {
           "artefacts": [
@@ -290,7 +147,11 @@
             "use",
             "use-commercial",
             "updates"
-          ]
+          ],
+          "requires": {
+            "operation": "offline-after-first-run",
+            "verification": "provider-response"
+          }
         }
       ]
     }

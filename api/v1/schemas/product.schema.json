@@ -4,26 +4,20 @@
   "title": "catalog product",
   "description": "One sellable product, in data/products/<product>.yaml. A product is a thing a buyer recognises; an offer is one way to buy it. The two are separate because the same product is commonly sold as a free edition and a paid one, and because a price change must not require restating what the product is.",
   "type": "object",
+  "$comment": "THERE IS NO PRODUCT-LEVEL LICENCE TYPE LIST, and it is worth saying why, because that field existed under three names in one day. It was `policies`, then briefly `offers` — which collided with the offers array, so every file held two `offers` keys, YAML kept the last, the list vanished silently and the validator still reported the catalog as valid — then `licence_types`. All three were the same mistake: an inheritance layer between an offer and what the buyer was owed, so reading SKU X told you a name and you had to resolve a second hierarchy to learn the actual promise. Everything it carried now lives on the offer: `creator`, `open`, `pro` and `free` said nothing the offer did not already state in `duration`, `seats`, `grants` and `price`, while `airgapped`, `pre-v0.5` and `multi-user` were smuggling obligations the vocabulary could not express — a connectivity requirement, a version ceiling, a definition of what a seat IS — and those became `offers[].requires`. THE INVARIANT: an offer is inspectable ON ITS OWN. What a SKU promises is readable without joining to anything, in this repository or any other.",
   "required": ["product", "name", "summary", "artefacts", "offers"],
   "additionalProperties": false,
   "properties": {
     "product": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "Stable identifier, matching the filename. Never reused for something else once an order has referenced it."
+      "description": "Stable identifier, matching the filename.\n\nNEVER REUSED for something else once an order has referenced it. That rule stands and is absolute — a recycled id silently reattaches old orders to a new product.\n\nRENAMING one is a different matter: permitted, and a BREAKING CHANGE with a known cost. It was done on 2026-09-10 (`workflow-lens` -> `cpmf-workflow-lens`) and this description previously read as though it could not be. What breaks, every time:\n\n- the provider's product code, so the reconciler plans a new object and reports the old one as unmanaged — while every licence already issued belongs to the old one;\n- the storage directory on every machine that holds state, `<user-root>/Licencing/<slug>/`, which strands silently: the directory and the `product` field inside its status.json agree with each other and disagree with the catalog, so nothing flags it;\n- any consumer joining on the published slug.\n\nSo a rename is a decision with a migration attached, not a spelling fix. The storage side is `cpmf-storage migrate <new> --renamed-from <old>`; the provider side is a reconcile that must be read before it is applied."
     },
     "name": { "type": "string", "description": "How it is written on the storefront." },
     "summary": { "type": "string", "description": "One or two sentences. What it does, not how." },
     "licensed": {
       "type": "boolean",
       "description": "Licences are issued for offers of this product. Nothing more — it does NOT mean 'requires a key at runtime', which is a client-enforcement decision the catalog has no business making: a licenced product may be activated by a pasted key, an account token, a shared licence store, or nothing at all. Absent means false, and an unlicenced product is skipped by the licencing reconciler rather than silently ignored. THE FIELD NAME KEEPS THE AMERICAN SPELLING and must not be 'corrected' to licenced: it is a wire value in the published /api/v1/catalog.json contract, which keygen_sync.py reads to decide what to reconcile. A repository-wide rename did change it once, and every product then read as NOT licensed — all ten managed objects reported as drift, from a change that looked like a spelling fix."
-    },
-    "policies": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
-      "description": "The licencing tiers ASSIGNED to this product, by template name. This is the complete set, not a subtraction from a default: a licenced product has exactly these policies and no others, and one with an empty or absent list has none. Nothing is granted implicitly.\n\nThese are OUR names, defined in the licencing repository's policy templates — never a provider's UUID and never a provider's attributes, so no vendor identity enters the catalog. A provider swap replaces what the names mean and leaves this list untouched.\n\nAssigning a tier to a product is therefore a data edit, and so is withdrawing one.",
-      "examples": [["free", "plus"], ["pre-v0.5"]]
     },
     "artefacts": {
       "type": "array",
@@ -87,6 +81,34 @@
           "description": "Human-readable identity for logs, URLs and operators. Free to change, unlike the SKU — which is the entire point of separating them. Never used as a join."
         },
         "name": { "type": "string" },
+        "from": {
+          "type": "string",
+          "description": "Authoring shorthand: inherit the named template from data/commercial_offers.yaml. AN AUTHORING DEVICE ONLY — tools/build.py materialises the template into the offer and this key never appears in the published /api/v1/catalog.json. A consumer therefore never resolves a reference, and every published offer states its whole promise. Fields written on the offer win, and the merge is SHALLOW: a template's `requires` is replaced whole, never blended key by key, because half-inherited obligations are unreadable.",
+          "examples": ["creator", "free", "open"]
+        },
+        "requires": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "OBLIGATIONS THE BUYER IS OWED that the fields above cannot express — how the licence must operate, not how a vendor implements it.\n\nThese exist because they were previously smuggled inside licence type names. `airgapped` was never a tier: its content was a signing scheme, a machine checkout and a .lic file path. `pre-v0.5` was a version gate. `multi-user` was 'a seat is a machine activation, not a user identity'. None of that is a grade on a ladder, and all of it is a promise to a buyer — so it belongs on the offer, where the promise is made.\n\nLicensing then tests a candidate provider configuration against these and either binds or refuses. It never rewrites them: an obligation the selected provider cannot meet is a SKU that must not be sold through that provider, not an obligation to be quietly relaxed.\n\nAbsent means the ordinary case: online validation, provider-signed responses, no binding, no version ceiling. Absent is not 'unspecified' — it is the default promise.",
+          "properties": {
+            "operation": {
+              "enum": ["online", "offline-after-first-run", "offline"],
+              "description": "When the holder must be able to reach a network. `offline` means never — the licence is usable on a machine that has no route out, which requires a self-contained artefact. `offline-after-first-run` permits one online activation and none afterwards. These are the three models in the licencing repository's licencing-setup.md, named here as promises rather than as mechanisms."
+            },
+            "verification": {
+              "enum": ["provider-response", "self-contained"],
+              "description": "What the client verifies against. `provider-response` means a signed answer from the provider, possibly replayed from cache within the expiry that answer declares. `self-contained` means the licence artefact itself carries its proof and needs nobody to confirm it — the only thing that survives a machine that is never online."
+            },
+            "binding": {
+              "enum": ["none", "machine-fingerprint", "user"],
+              "description": "What the licence is tied to. `machine-fingerprint` is what makes a seat count enforceable and what a checkout binds to. Recorded because getting it wrong is silent: a licence artefact issued unbound bypasses seat enforcement entirely while looking correct, which is written down in keygen.yaml as the reason to use machine checkout rather than licence checkout."
+            },
+            "version_ceiling": {
+              "type": "string",
+              "description": "The product versions this offer covers, where it is deliberately not open-ended — an early-adopter promise that stops at a release boundary. This is what `pre-v0.5` actually meant, expressed as the obligation rather than as a licence name."
+            }
+          }
+        },
         "price": {
           "type": "object",
           "required": ["currency"],
